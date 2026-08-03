@@ -27,6 +27,11 @@ const router = createRouter({
           name: 'device-channels',
           component: () => import('@/views/devices/DeviceChannelsView.vue'),
         },
+        {
+          path: 'play/:deviceId/:channelId',
+          name: 'play',
+          component: () => import('@/views/play/PlayView.vue'),
+        },
       ],
     },
   ],
