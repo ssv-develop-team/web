@@ -1,0 +1,74 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { RouterView, useRoute, useRouter } from 'vue-router'
+
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
+const route = useRoute()
+const router = useRouter()
+
+const activeMenu = computed(() =>
+  route.path.startsWith('/devices') ? '/devices' : route.path,
+)
+
+function onLogout() {
+  auth.logout()
+  router.push({ name: 'login' })
+}
+</script>
+
+<template>
+  <el-container class="layout">
+    <el-aside width="200px" class="aside">
+      <div class="logo">WVP 管理平台</div>
+      <el-menu :default-active="activeMenu" router>
+        <el-menu-item index="/devices">国标设备</el-menu-item>
+      </el-menu>
+    </el-aside>
+    <el-container>
+      <el-header class="header">
+        <el-tag v-if="auth.username" class="user" type="info">{{ auth.username }}</el-tag>
+        <el-button link type="danger" @click="onLogout">退出</el-button>
+      </el-header>
+      <el-main class="main">
+        <RouterView />
+      </el-main>
+    </el-container>
+  </el-container>
+</template>
+
+<style scoped>
+.layout {
+  min-height: 100vh;
+}
+
+.aside {
+  background: var(--el-bg-color);
+  border-right: 1px solid var(--el-border-color);
+}
+
+.logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-bottom: 1px solid var(--el-border-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--el-border-color);
+}
+
+.user {
+  margin-right: 12px;
+}
+
+.main {
+  background: var(--el-fill-color-blank);
+}
+</style>

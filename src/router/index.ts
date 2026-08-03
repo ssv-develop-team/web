@@ -13,9 +13,21 @@ const router = createRouter({
     },
     {
       path: '/',
-      name: 'devices',
-      component: () => import('@/views/devices/DevicesView.vue'),
+      component: () => import('@/layouts/MainLayout.vue'),
       meta: { requiresAuth: true },
+      children: [
+        { path: '', redirect: { name: 'devices' } },
+        {
+          path: 'devices',
+          name: 'devices',
+          component: () => import('@/views/devices/DevicesView.vue'),
+        },
+        {
+          path: 'devices/:deviceId/channels',
+          name: 'device-channels',
+          component: () => import('@/views/devices/DeviceChannelsView.vue'),
+        },
+      ],
     },
   ],
 })
