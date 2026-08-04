@@ -270,6 +270,8 @@ export interface MediaServer {
   autoConfig?: boolean
   /** ZLM 鉴权参数,勿写入日志(04 §6.6) */
   secret?: string
+  /** 状态(只读): 是否在线 */
+  status?: boolean
   hookAliveInterval?: number
   /** 是否多端口模式,默认 false */
   rtpEnable?: boolean
