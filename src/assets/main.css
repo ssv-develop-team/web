@@ -1,35 +1,11 @@
 @import './base.css';
 
+/*
+ * 管理界面全宽自适应布局。
+ * 去除了 create-vue 模板的 demo 样式: #app 的 max-width 居中、
+ * 1024px 以上的 body flex 居中和两列 grid,否则内容会收缩不铺满视口。
+ */
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+  width: 100%;
+  min-height: 100vh;
 }
