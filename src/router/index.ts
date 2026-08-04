@@ -52,6 +52,11 @@ const router = createRouter({
           name: 'proxies',
           component: () => import('@/views/streamProxy/ProxiesView.vue'),
         },
+        {
+          path: 'pushes',
+          name: 'pushes',
+          component: () => import('@/views/streamPush/PushesView.vue'),
+        },
       ],
     },
   ],

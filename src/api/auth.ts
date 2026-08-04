@@ -9,19 +9,18 @@ export interface LoginResponse {
   serverId: string
 }
 
-/** /api/user/userInfo 返回 LoginUser(源码: conf/security/dto/LoginUser) */
+/**
+ * /api/user/userInfo 返回扁平 LoginUser(实测 JSON 结构,源码 conf/security/dto/LoginUser)。
+ * pushKey 用于外部推流鉴权 sign=md5(pushKey)。
+ */
 export interface UserInfo {
-  user: {
-    id: number
-    username: string
-    pushKey?: string
-    createTime?: string
-    updateTime?: string
-    role?: { id: number; name: string; authority?: string[] }
-  }
+  id: number
+  username: string
+  pushKey?: string
+  enabled?: boolean
+  role?: { id: number; name?: string; authority?: string[] }
   accessToken?: string
   serverId?: string
-  loginTime?: string
 }
 
 /** 登录;password 传明文,内部按 32 位小写 MD5 计算(04 §2.1) */
