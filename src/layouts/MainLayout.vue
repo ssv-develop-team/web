@@ -14,6 +14,7 @@ const activeMenu = computed(() => {
   if (route.path.startsWith('/proxies')) return '/proxies'
   if (route.path.startsWith('/pushes')) return '/pushes'
   if (route.path.startsWith('/platforms')) return '/platforms'
+  if (route.path.startsWith('/record-plans')) return '/record-plans'
   return route.path
 })
 
@@ -32,6 +33,7 @@ function onLogout() {
         <el-menu-item index="/proxies">拉流代理</el-menu-item>
         <el-menu-item index="/pushes">推流通道</el-menu-item>
         <el-menu-item index="/platforms">上级平台</el-menu-item>
+        <el-menu-item index="/record-plans">录制计划</el-menu-item>
         <el-menu-item index="/media-servers">媒体节点</el-menu-item>
       </el-menu>
     </el-aside>

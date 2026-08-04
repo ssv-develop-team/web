@@ -62,6 +62,11 @@ const router = createRouter({
           name: 'platforms',
           component: () => import('@/views/platform/PlatformsView.vue'),
         },
+        {
+          path: 'record-plans',
+          name: 'record-plans',
+          component: () => import('@/views/recordPlan/RecordPlansView.vue'),
+        },
       ],
     },
   ],
