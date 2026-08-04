@@ -11,6 +11,7 @@ const router = useRouter()
 const activeMenu = computed(() => {
   if (route.path.startsWith('/devices')) return '/devices'
   if (route.path.startsWith('/media-servers')) return '/media-servers'
+  if (route.path.startsWith('/proxies')) return '/proxies'
   return route.path
 })
 
@@ -26,6 +27,7 @@ function onLogout() {
       <div class="logo">WVP 管理平台</div>
       <el-menu :default-active="activeMenu" router>
         <el-menu-item index="/devices">国标设备</el-menu-item>
+        <el-menu-item index="/proxies">拉流代理</el-menu-item>
         <el-menu-item index="/media-servers">媒体节点</el-menu-item>
       </el-menu>
     </el-aside>

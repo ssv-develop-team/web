@@ -47,6 +47,11 @@ const router = createRouter({
           name: 'media-servers',
           component: () => import('@/views/server/MediaServersView.vue'),
         },
+        {
+          path: 'proxies',
+          name: 'proxies',
+          component: () => import('@/views/streamProxy/ProxiesView.vue'),
+        },
       ],
     },
   ],
