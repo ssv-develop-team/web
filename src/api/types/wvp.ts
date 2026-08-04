@@ -177,3 +177,51 @@ export interface DeviceChannel extends CommonGBChannel {
   channelType: number
   dataType?: number
 }
+
+/** 媒体节点(04 附录 9.5) */
+export interface MediaServer {
+  id?: string
+  ip: string
+  /** hook 使用的 IP(ZLM 访问 WVP 的 IP),默认 127.0.0.1 */
+  hookIp?: string
+  sdpIp?: string
+  streamIp?: string
+  httpPort: number
+  httpSSlPort?: number
+  rtmpPort?: number
+  flvPort?: number
+  flvSSLPort?: number
+  mp4Port?: number
+  wsFlvPort?: number
+  wsFlvSSLPort?: number
+  rtmpSSlPort?: number
+  /** RTP 收流端口(单端口模式) */
+  rtpProxyPort?: number
+  /** 1078 收流端口(单端口模式) */
+  jttProxyPort?: number
+  rtspPort?: number
+  rtspSSLPort?: number
+  /** 是否自动配置 ZLM,默认 true */
+  autoConfig?: boolean
+  /** ZLM 鉴权参数,勿写入日志(04 §6.6) */
+  secret?: string
+  hookAliveInterval?: number
+  /** 是否多端口模式,默认 false */
+  rtpEnable?: boolean
+  /** 多端口 RTP 收流端口范围,默认 30000,30500 */
+  rtpPortRange?: string
+  sendRtpPortRange?: string
+  /** assist 服务端口,默认 0(关闭) */
+  recordAssistPort?: number
+  createTime?: string
+  updateTime?: string
+  lastKeepaliveTime?: string
+  defaultServer?: boolean
+  /** 录像存储时长(天) */
+  recordDay?: number
+  recordPath?: string
+  /** zlm / abl */
+  type?: string
+  transcodeSuffix?: string
+  serverId?: string
+}

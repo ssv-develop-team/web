@@ -42,6 +42,11 @@ const router = createRouter({
           name: 'playback',
           component: () => import('@/views/playback/PlaybackView.vue'),
         },
+        {
+          path: 'media-servers',
+          name: 'media-servers',
+          component: () => import('@/views/server/MediaServersView.vue'),
+        },
       ],
     },
   ],
