@@ -67,6 +67,16 @@ const router = createRouter({
           name: 'record-plans',
           component: () => import('@/views/recordPlan/RecordPlansView.vue'),
         },
+        {
+          path: 'users',
+          name: 'users',
+          component: () => import('@/views/user/UsersView.vue'),
+        },
+        {
+          path: 'api-keys',
+          name: 'api-keys',
+          component: () => import('@/views/user/ApiKeysView.vue'),
+        },
       ],
     },
   ],

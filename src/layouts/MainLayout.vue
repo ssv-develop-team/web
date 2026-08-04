@@ -15,6 +15,8 @@ const activeMenu = computed(() => {
   if (route.path.startsWith('/pushes')) return '/pushes'
   if (route.path.startsWith('/platforms')) return '/platforms'
   if (route.path.startsWith('/record-plans')) return '/record-plans'
+  if (route.path.startsWith('/users')) return '/users'
+  if (route.path.startsWith('/api-keys')) return '/api-keys'
   return route.path
 })
 
@@ -35,6 +37,8 @@ function onLogout() {
         <el-menu-item index="/platforms">上级平台</el-menu-item>
         <el-menu-item index="/record-plans">录制计划</el-menu-item>
         <el-menu-item index="/media-servers">媒体节点</el-menu-item>
+        <el-menu-item index="/users">用户管理</el-menu-item>
+        <el-menu-item index="/api-keys">API Key</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

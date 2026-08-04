@@ -22,7 +22,8 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         // 05 §8: 开发期走 nginx 外部地址,复用 /api/ 的 sub_filter 媒体地址重写
-        '/api': { target: proxyTarget, changeOrigin: true },
+        // 注意带斜杠: '/api' 前缀会误伤 /api-keys 等前端路由
+        '/api/': { target: proxyTarget, changeOrigin: true },
         '/rtp': { target: proxyTarget, changeOrigin: true, ws: true },
         '/mp4_record': { target: proxyTarget, changeOrigin: true, ws: true },
         '/mediaserver': { target: proxyTarget, changeOrigin: true },
