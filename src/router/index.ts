@@ -82,6 +82,11 @@ const router = createRouter({
           name: 'api-keys',
           component: () => import('@/views/user/ApiKeysView.vue'),
         },
+        {
+          path: 'alarms',
+          name: 'alarms',
+          component: () => import('@/views/alarm/AlarmsView.vue'),
+        },
       ],
     },
   ],
