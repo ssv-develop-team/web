@@ -32,6 +32,16 @@ const router = createRouter({
           name: 'play',
           component: () => import('@/views/play/PlayView.vue'),
         },
+        {
+          path: 'record/:deviceId/:channelId',
+          name: 'record-query',
+          component: () => import('@/views/record/RecordQueryView.vue'),
+        },
+        {
+          path: 'playback/:deviceId/:channelId',
+          name: 'playback',
+          component: () => import('@/views/playback/PlaybackView.vue'),
+        },
       ],
     },
   ],

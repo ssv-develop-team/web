@@ -72,6 +72,13 @@ function openPlay(row: DeviceChannel) {
   })
 }
 
+function openRecord(row: DeviceChannel) {
+  router.push({
+    name: 'record-query',
+    params: { deviceId: deviceId.value, channelId: row.deviceId },
+  })
+}
+
 onMounted(load)
 </script>
 
@@ -135,7 +142,8 @@ onMounted(load)
           <el-button v-if="isCatalog(row)" link type="primary" @click="enterCatalog(row)">
             进入
           </el-button>
-          <el-button v-else link type="primary" @click="openPlay(row)">播放</el-button>
+          <el-button v-if="!isCatalog(row)" link type="primary" @click="openPlay(row)">播放</el-button>
+          <el-button v-if="!isCatalog(row)" link type="primary" @click="openRecord(row)">录像</el-button>
         </template>
       </el-table-column>
     </el-table>
