@@ -57,6 +57,11 @@ const router = createRouter({
           name: 'pushes',
           component: () => import('@/views/streamPush/PushesView.vue'),
         },
+        {
+          path: 'platforms',
+          name: 'platforms',
+          component: () => import('@/views/platform/PlatformsView.vue'),
+        },
       ],
     },
   ],

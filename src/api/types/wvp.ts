@@ -178,6 +178,71 @@ export interface DeviceChannel extends CommonGBChannel {
   dataType?: number
 }
 
+/** 上级平台/国标级联(04 附录 9.4);提交前必须完整校验(04 §4.9) */
+export interface Platform {
+  id?: number
+  enable: boolean
+  name: string
+  /** SIP 服务国标编码 */
+  serverGBId: string
+  /** SIP 服务国标域 */
+  serverGBDomain: string
+  serverIp: string
+  serverPort: number
+  /** 设备国标编号(本平台对上注册身份) */
+  deviceGBId: string
+  deviceIp: string
+  devicePort: number
+  /** SIP 认证用户名,默认用 deviceGBId */
+  username?: string
+  password?: string
+  /** 注册周期(秒) */
+  expires?: number
+  /** 心跳周期(秒) */
+  keepTimeout?: number
+  /** UDP / TCP */
+  transport?: string
+  /** UTF-8 / GB2312 */
+  characterSet?: string
+  /** 允许云台控制 */
+  ptz?: boolean
+  /** RTCP 流保活 */
+  rtcp?: boolean
+  /** 在线状态(只读) */
+  status?: boolean
+  /** 通道数量(只读) */
+  channelCount?: number
+  /** 已订阅目录(只读) */
+  catalogSubscribe?: boolean
+  /** 已订阅报警(只读) */
+  alarmSubscribe?: boolean
+  /** 已订阅移动位置(只读) */
+  mobilePositionSubscribe?: boolean
+  /** 目录分组:每包通道数量 1/2/4/8 */
+  catalogGroup?: number
+  createTime?: string
+  updateTime?: string
+  asMessageChannel?: boolean
+  /** 点播回复 200 OK 使用的 IP */
+  sendStreamIp?: string
+  autoPushChannel?: boolean
+  /** 目录包含平台信息 0/1 */
+  catalogWithPlatform?: number
+  /** 目录包含分组信息 0/1 */
+  catalogWithGroup?: number
+  /** 目录包含行政区划 0/1 */
+  catalogWithRegion?: number
+  civilCode?: string
+  manufacturer?: string
+  model?: string
+  address?: string
+  /** 注册方式 1-4,缺省 1 */
+  registerWay?: number
+  /** 保密属性 0/1,缺省 0 */
+  secrecy?: number
+  serverId?: string
+}
+
 /** 媒体节点(04 附录 9.5) */
 export interface MediaServer {
   id?: string
