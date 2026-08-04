@@ -92,6 +92,11 @@ const router = createRouter({
           name: 'positions',
           component: () => import('@/views/position/PositionsView.vue'),
         },
+        {
+          path: 'logs',
+          name: 'logs',
+          component: () => import('@/views/log/LogsView.vue'),
+        },
       ],
     },
   ],

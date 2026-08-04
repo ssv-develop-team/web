@@ -20,6 +20,7 @@ const activeMenu = computed(() => {
   if (route.path.startsWith('/api-keys')) return '/api-keys'
   if (route.path.startsWith('/alarms')) return '/alarms'
   if (route.path.startsWith('/positions')) return '/positions'
+  if (route.path.startsWith('/logs')) return '/logs'
   return route.path
 })
 
@@ -45,6 +46,7 @@ function onLogout() {
         <el-menu-item index="/api-keys">API Key</el-menu-item>
         <el-menu-item index="/alarms">报警</el-menu-item>
         <el-menu-item index="/positions">位置</el-menu-item>
+        <el-menu-item index="/logs">日志</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
