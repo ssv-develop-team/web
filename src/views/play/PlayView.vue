@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 
 import { startPlay, stopPlay } from '@/api/play'
+import PtzPanel from '@/components/PtzPanel.vue'
 import { createJessibucaPlayer } from '@/player'
 import { selectFlvUrl } from '@/player/stream'
 
@@ -75,9 +76,14 @@ onBeforeUnmount(stop)
       <span class="title">{{ deviceId }} / {{ channelId }}</span>
       <el-button type="danger" @click="stopAndBack">停止并退出</el-button>
     </div>
-    <div v-loading="loading" class="player-wrap">
-      <div ref="containerRef" class="player" />
-      <el-empty v-if="error && !loading" :description="error" class="overlay" />
+    <div class="body">
+      <div v-loading="loading" class="player-wrap">
+        <div ref="containerRef" class="player" />
+        <el-empty v-if="error && !loading" :description="error" class="overlay" />
+      </div>
+      <aside class="sidebar">
+        <PtzPanel :device-id="deviceId" :channel-id="channelId" />
+      </aside>
     </div>
   </div>
 </template>
@@ -100,10 +106,22 @@ onBeforeUnmount(stop)
   font-weight: 600;
 }
 
+.body {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
 .player-wrap {
   position: relative;
   flex: 1;
   background: #000;
+}
+
+.sidebar {
+  width: 244px;
+  flex-shrink: 0;
 }
 
 .player {
