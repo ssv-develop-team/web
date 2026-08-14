@@ -38,6 +38,11 @@ const router = createRouter({
           component: () => import('@/views/play/PlayView.vue'),
         },
         {
+          path: 'people-flow',
+          name: 'people-flow',
+          component: () => import('@/views/ai/PeopleFlowView.vue'),
+        },
+        {
           path: 'record/:deviceId/:channelId',
           name: 'record-query',
           component: () => import('@/views/record/RecordQueryView.vue'),

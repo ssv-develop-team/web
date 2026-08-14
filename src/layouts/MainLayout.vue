@@ -11,6 +11,7 @@ const router = useRouter()
 const activeMenu = computed(() => {
   if (route.path.startsWith('/dashboard')) return '/dashboard'
   if (route.path.startsWith('/devices')) return '/devices'
+  if (route.path.startsWith('/people-flow')) return '/people-flow'
   if (route.path.startsWith('/media-servers')) return '/media-servers'
   if (route.path.startsWith('/proxies')) return '/proxies'
   if (route.path.startsWith('/pushes')) return '/pushes'
@@ -37,6 +38,7 @@ function onLogout() {
       <el-menu :default-active="activeMenu" router>
         <el-menu-item index="/dashboard">首页</el-menu-item>
         <el-menu-item index="/devices">国标设备</el-menu-item>
+        <el-menu-item index="/people-flow">人流监控</el-menu-item>
         <el-menu-item index="/proxies">拉流代理</el-menu-item>
         <el-menu-item index="/pushes">推流通道</el-menu-item>
         <el-menu-item index="/platforms">上级平台</el-menu-item>

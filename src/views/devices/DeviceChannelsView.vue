@@ -79,6 +79,18 @@ function openRecord(row: DeviceChannel) {
   })
 }
 
+function openPeopleFlow(row: DeviceChannel) {
+  router.push({
+    name: 'people-flow',
+    query: {
+      deviceId: deviceId.value,
+      channelId: row.deviceId ?? '',
+      channelPk: String(row.id ?? ''),
+      channelName: row.name ?? '',
+    },
+  })
+}
+
 onMounted(load)
 </script>
 
@@ -137,13 +149,16 @@ onMounted(load)
       <el-table-column label="音频" width="70">
         <template #default="{ row }">{{ row.hasAudio ? '是' : '否' }}</template>
       </el-table-column>
-      <el-table-column label="操作" width="160" fixed="right">
+      <el-table-column label="操作" width="250" fixed="right">
         <template #default="{ row }">
           <el-button v-if="isCatalog(row)" link type="primary" @click="enterCatalog(row)">
             进入
           </el-button>
           <el-button v-if="!isCatalog(row)" link type="primary" @click="openPlay(row)">播放</el-button>
           <el-button v-if="!isCatalog(row)" link type="primary" @click="openRecord(row)">录像</el-button>
+          <el-button v-if="!isCatalog(row)" link type="primary" @click="openPeopleFlow(row)">
+            人流监控
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
