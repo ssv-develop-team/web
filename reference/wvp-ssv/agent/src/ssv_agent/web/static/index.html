@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#183b65" />
+    <title>SSV 现场分析 · 事件观测台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">SSV</span>
+          <strong>现场分析</strong>
+        </div>
+        <nav class="nav-list" aria-label="主导航">
+          <a class="nav-item active" href="#overview" data-view="overview"><span class="nav-icon" aria-hidden="true">⌂</span><span>运行概览</span></a>
+          <a class="nav-item" href="#events" data-view="events"><span class="nav-icon" aria-hidden="true">▣</span><span>事件记录</span></a>
+        </nav>
+        <div class="sidebar-foot">v1.0.0</div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-product">
+            <strong>SSV 现场分析</strong>
+            <span>单站点视频事件监控与分析系统</span>
+          </div>
+          <div class="topbar-meta">
+            <span class="connection-state"><span class="status-dot" id="connection-dot"></span><span id="connection-label">正在连接账本</span></span>
+            <span class="updated-label" id="last-updated">等待首次同步</span>
+            <button class="icon-button" id="refresh-button" type="button" title="立即刷新" aria-label="立即刷新">↻</button>
+          </div>
+        </header>
+
+        <section class="view" id="overview" aria-labelledby="overview-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="overview-title">账本概览</h2>
+            </div>
+          </div>
+          <div class="metrics-grid" id="metrics-grid" aria-live="polite">
+            <article class="metric-card loading-card"><span></span><span></span></article>
+            <article class="metric-card loading-card"><span></span><span></span></article>
+            <article class="metric-card loading-card"><span></span><span></span></article>
+            <article class="metric-card loading-card"><span></span><span></span></article>
+          </div>
+          <div class="overview-grid">
+            <section class="panel recent-panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">LATEST SIGNALS</p><h3>最近事件</h3></div>
+                <a class="text-link" href="#events">查看全部 <span>→</span></a>
+              </div>
+              <div class="mini-events" id="recent-events"></div>
+            </section>
+            <section class="panel status-panel">
+              <div class="panel-heading"><div><p class="eyebrow">DATA FLOW</p><h3>数据流向</h3></div></div>
+              <div class="pipeline-track">
+                <div class="pipeline-node"><span class="pipeline-icon">◉</span><strong>视频分析</strong><small>GStreamer runner</small></div>
+                <span class="pipeline-line"></span>
+                <div class="pipeline-node"><span class="pipeline-icon">◆</span><strong>事件账本</strong><small>SQLite EventLedger</small></div>
+                <span class="pipeline-line"></span>
+                <div class="pipeline-node"><span class="pipeline-icon">✦</span><strong>Web 展示</strong><small>只读同步</small></div>
+              </div>
+              <div class="status-note"><span class="status-dot ok"></span><span>每 10 秒刷新账本；不代表分析进程在线</span></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view events-view" id="events" aria-labelledby="events-title" hidden>
+          <div class="section-heading">
+            <div><h2 id="events-title">事件记录</h2></div>
+            <span class="result-count" id="result-count">—</span>
+          </div>
+          <form class="filters" id="filters-form">
+            <label class="search-field"><span>⌕</span><input id="query-input" name="q" type="search" placeholder="搜索事件、来源或规则" autocomplete="off" /></label>
+            <label class="filter-field"><span>来源</span><input id="source-input" name="source" type="text" placeholder="全部来源" autocomplete="off" /></label>
+            <label><span class="sr-only">状态</span><select id="status-input" name="status"><option value="">全部状态</option><option value="pending">待处理</option><option value="completed">已完成</option><option value="manual_review">需关注</option></select></label>
+            <label><span class="sr-only">结论</span><select id="verdict-input" name="verdict"><option value="">全部结论</option><option value="violation">违规</option><option value="compliant">合规</option><option value="uncertain">不确定</option></select></label>
+            <label class="filter-field filter-time"><span>从</span><input id="from-input" name="from" type="datetime-local" aria-label="开始时间" /></label>
+            <label class="filter-field filter-time"><span>至</span><input id="to-input" name="to" type="datetime-local" aria-label="结束时间" /></label>
+            <button class="secondary-button" type="submit">筛选</button>
+          </form>
+          <section class="panel table-panel">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>事件</th><th>来源</th><th>发生时间</th><th>状态</th><th>分析结论</th><th>证据</th><th></th></tr></thead>
+                <tbody id="events-body"><tr><td colspan="7" class="table-message">正在读取事件账本…</td></tr></tbody>
+              </table>
+            </div>
+            <div class="pagination"><span id="page-label">—</span><div><button class="page-button" id="prev-page" type="button" aria-label="上一页">←</button><button class="page-button" id="next-page" type="button" aria-label="下一页">→</button></div></div>
+          </section>
+        </section>
+
+        <section class="view detail-view" id="event-detail" aria-labelledby="detail-title" hidden>
+          <div class="section-heading">
+            <div class="detail-breadcrumb"><a href="#events">事件记录</a><span>/</span><h2 id="detail-title">事件详情</h2></div>
+            <button class="secondary-button" id="close-detail" type="button">返回列表</button>
+          </div>
+          <div id="detail-content"></div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
