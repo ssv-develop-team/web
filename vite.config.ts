@@ -8,6 +8,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
   const proxyTarget = env.VITE_PROXY_TARGET || 'http://localhost:8080'
+  const ssvProxyTarget = env.VITE_SSV_API_PROXY_TARGET || 'http://127.0.0.1:8765'
 
   return {
     plugins: [
@@ -29,6 +30,12 @@ export default defineConfig(({ mode }) => {
         '/channel/log': { target: proxyTarget, changeOrigin: true, ws: true },
         '/mp4_record': { target: proxyTarget, changeOrigin: true, ws: true },
         '/mediaserver': { target: proxyTarget, changeOrigin: true },
+        // 独立 SSV 路径：/ssv-api/api/v1 -> Agent 的 /api/v1。
+        '/ssv-api': {
+          target: ssvProxyTarget,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/ssv-api/, ''),
+        },
       },
     },
   }

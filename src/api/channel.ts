@@ -18,8 +18,9 @@ export interface QueryCommonChannelsParams {
 
 export function queryCommonChannels(
   params: QueryCommonChannelsParams,
+  signal?: AbortSignal,
 ): Promise<PageInfo<CommonGBChannel>> {
-  return unwrapWvp(request.get('/api/common/channel/list', { params }))
+  return unwrapWvp(request.get('/api/common/channel/list', { params, signal }))
 }
 
 /** 单个统一通道 */

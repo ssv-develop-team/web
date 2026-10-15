@@ -11,7 +11,6 @@ const router = useRouter()
 const activeMenu = computed(() => {
   if (route.path.startsWith('/dashboard')) return '/dashboard'
   if (route.path.startsWith('/devices')) return '/devices'
-  if (route.path.startsWith('/people-flow')) return '/people-flow'
   if (route.path.startsWith('/media-servers')) return '/media-servers'
   if (route.path.startsWith('/proxies')) return '/proxies'
   if (route.path.startsWith('/pushes')) return '/pushes'
@@ -22,6 +21,7 @@ const activeMenu = computed(() => {
   if (route.path.startsWith('/alarms')) return '/alarms'
   if (route.path.startsWith('/positions')) return '/positions'
   if (route.path.startsWith('/logs')) return '/logs'
+  if (route.path.startsWith('/events')) return '/events'
   return route.path
 })
 
@@ -38,7 +38,6 @@ function onLogout() {
       <el-menu :default-active="activeMenu" router>
         <el-menu-item index="/dashboard">首页</el-menu-item>
         <el-menu-item index="/devices">国标设备</el-menu-item>
-        <el-menu-item index="/people-flow">人流监控</el-menu-item>
         <el-menu-item index="/proxies">拉流代理</el-menu-item>
         <el-menu-item index="/pushes">推流通道</el-menu-item>
         <el-menu-item index="/platforms">上级平台</el-menu-item>
@@ -49,6 +48,7 @@ function onLogout() {
         <el-menu-item index="/alarms">报警</el-menu-item>
         <el-menu-item index="/positions">位置</el-menu-item>
         <el-menu-item index="/logs">日志</el-menu-item>
+        <el-menu-item index="/events">SSV 事件</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

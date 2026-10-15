@@ -38,11 +38,6 @@ const router = createRouter({
           component: () => import('@/views/play/PlayView.vue'),
         },
         {
-          path: 'people-flow',
-          name: 'people-flow',
-          component: () => import('@/views/ai/PeopleFlowView.vue'),
-        },
-        {
           path: 'record/:deviceId/:channelId',
           name: 'record-query',
           component: () => import('@/views/record/RecordQueryView.vue'),
@@ -101,6 +96,16 @@ const router = createRouter({
           path: 'logs',
           name: 'logs',
           component: () => import('@/views/log/LogsView.vue'),
+        },
+        {
+          path: 'events',
+          name: 'ssv-events',
+          component: () => import('@/views/ssv/SsvEventsView.vue'),
+        },
+        {
+          path: 'events/:eventId',
+          name: 'ssv-event-detail',
+          component: () => import('@/views/ssv/SsvEventDetailView.vue'),
         },
       ],
     },

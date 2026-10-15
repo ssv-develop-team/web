@@ -79,18 +79,6 @@ function openRecord(row: DeviceChannel) {
   })
 }
 
-function openPeopleFlow(row: DeviceChannel) {
-  router.push({
-    name: 'people-flow',
-    query: {
-      deviceId: deviceId.value,
-      channelId: row.deviceId ?? '',
-      channelPk: String(row.id ?? ''),
-      channelName: row.name ?? '',
-    },
-  })
-}
-
 onMounted(load)
 </script>
 
@@ -156,9 +144,6 @@ onMounted(load)
           </el-button>
           <el-button v-if="!isCatalog(row)" link type="primary" @click="openPlay(row)">播放</el-button>
           <el-button v-if="!isCatalog(row)" link type="primary" @click="openRecord(row)">录像</el-button>
-          <el-button v-if="!isCatalog(row)" link type="primary" @click="openPeopleFlow(row)">
-            人流监控
-          </el-button>
         </template>
       </el-table-column>
     </el-table>
