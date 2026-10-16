@@ -10,6 +10,24 @@
 
 WVP 请求使用 `/api/`，SSV 事件请求使用 `/ssv-api/`；两者通过 Vite 开发代理分别转发到对应服务。
 
+## 架构图
+
+```mermaid
+flowchart LR
+    Browser[浏览器] --> App[Vue 3 + TypeScript 前端]
+    App --> Router[Vue Router]
+    App --> Store[Pinia 状态管理]
+    App --> Views[业务页面与播放器]
+    Views --> WvpClient[WVP API 适配层\nsrc/api/*]
+    Views --> SsvClient[SSV 只读 API 适配层\nsrc/api/ssv.ts]
+    WvpClient --> ViteProxy[Vite 开发代理]
+    SsvClient --> ViteProxy
+    ViteProxy -->|/api/、/rtp、WebSocket| WVP[WVP 服务\nVITE_PROXY_TARGET]
+    ViteProxy -->|/ssv-api/api/v1\n重写为 /api/v1| SSV[SSV Agent\nVITE_SSV_API_PROXY_TARGET]
+```
+
+前端负责页面路由、状态和展示；WVP 负责设备、媒体与平台管理，SSV Agent 负责事件及证据的只读查询。
+
 ## 运行方式
 
 ### 环境要求
