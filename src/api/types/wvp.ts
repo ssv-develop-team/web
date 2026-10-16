@@ -1,8 +1,7 @@
 /**
  * WVP 实体类型。
- * 字段定义来源: wvp-baseline docs/04-wvp-api-reference.md 附录 9.x +
- * vendor 源码(Device.java / CommonGBChannel.java / DeviceChannel.java)。
- * 升级 WVP 时按 04 §7 维护清单第 3 条核对更新。
+ * 字段定义来源: 当前运行 WVP OpenAPI 与 wvp-baseline vendor 源码。
+ * 升级 WVP 时同时核对运行时 DTO 与基线 DTO 的字段语义。
  */
 
 /** 国标设备(04 附录 9.2) */
@@ -124,14 +123,17 @@ export interface CommonGBChannel {
 
 /**
  * 设备下通道(DeviceChannel extends CommonGBChannel,源码 bean 同构)。
- * 注意: 无 gb* 前缀字段为国标本体属性;deviceId 即国标通道编号(字符串),
- * 与 CommonGBChannel.gbId(整数主键)不可混用(04 §2.3)。
+ * 注意: GitHub 基线使用 deviceId 表示通道编号；当前 Docker WVP 使用
+ * channelId 表示通道编号、deviceId 表示所属设备编号。调用播放类接口前
+ * 必须通过 getWvpChannelId() 取得通道编号，不能使用 gbId。
  */
 export interface DeviceChannel extends CommonGBChannel {
   id: number
   parentDeviceId?: string
   parentName?: string
-  /** 国标通道编号(字符串) */
+  /** 当前 Docker WVP 的通道国标编号 */
+  channelId?: string
+  /** GitHub 基线中的通道编号；当前 Docker WVP 中表示所属设备编号 */
   deviceId?: string
   name?: string
   manufacturer?: string
@@ -152,7 +154,7 @@ export interface DeviceChannel extends CommonGBChannel {
   ipAddress?: string
   port?: number
   password?: string
-  status?: string
+  status?: string | boolean
   longitude?: number
   latitude?: number
   ptzType?: number
@@ -176,6 +178,20 @@ export interface DeviceChannel extends CommonGBChannel {
   /** 0 普通通道,1 行政区划,2 业务分组/虚拟组织 */
   channelType: number
   dataType?: number
+}
+
+/**
+ * 取得 WVP 通道的国标编号。
+ * 当前 Docker WVP 使用 channelId；仅在检测到 GitHub 基线的
+ * parentDeviceId 字段时，才回退使用 deviceId。
+ */
+export function getWvpChannelId(
+  channel: Pick<DeviceChannel, 'channelId' | 'deviceId' | 'parentDeviceId'>,
+): string | undefined {
+  const channelId = channel.channelId?.trim()
+  if (channelId) return channelId
+  if (channel.parentDeviceId?.trim()) return channel.deviceId?.trim()
+  return undefined
 }
 
 /** 上级平台/国标级联(04 附录 9.4);提交前必须完整校验(04 §4.9) */

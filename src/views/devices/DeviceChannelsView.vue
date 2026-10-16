@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ElMessage } from 'element-plus'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { queryChannels, querySubChannels } from '@/api/device'
+import { getWvpChannelId } from '@/api/types/wvp'
 import type { DeviceChannel } from '@/api/types/wvp'
 
 const route = useRoute()
@@ -29,8 +31,13 @@ async function load() {
       online: onlyOnline.value || undefined,
     }
     const parent = pathStack.value[pathStack.value.length - 1]
+    const parentChannelId = parent ? getWvpChannelId(parent) : undefined
+    if (parent && !parentChannelId) {
+      ElMessage.error('通道响应缺少通道国标编号')
+      return
+    }
     const resp = parent
-      ? await querySubChannels(deviceId.value, parent.deviceId!, params)
+      ? await querySubChannels(deviceId.value, parentChannelId!, params)
       : await queryChannels(deviceId.value, params)
     list.value = resp.list
     total.value = resp.total
@@ -65,18 +72,36 @@ function backToDevices() {
   router.push({ name: 'devices' })
 }
 
+function channelIdOf(row: DeviceChannel): string | undefined {
+  return getWvpChannelId(row)
+}
+
 function openPlay(row: DeviceChannel) {
+  const channelId = channelIdOf(row)
+  if (!channelId) {
+    ElMessage.error('通道响应缺少通道国标编号')
+    return
+  }
   router.push({
     name: 'play',
-    params: { deviceId: deviceId.value, channelId: row.deviceId },
+    params: { deviceId: deviceId.value, channelId },
   })
 }
 
 function openRecord(row: DeviceChannel) {
+  const channelId = channelIdOf(row)
+  if (!channelId) {
+    ElMessage.error('通道响应缺少通道国标编号')
+    return
+  }
   router.push({
     name: 'record-query',
-    params: { deviceId: deviceId.value, channelId: row.deviceId },
+    params: { deviceId: deviceId.value, channelId },
   })
+}
+
+function isOnline(row: DeviceChannel): boolean {
+  return row.status === true || row.status === 'ON'
 }
 
 onMounted(load)
@@ -88,10 +113,7 @@ onMounted(load)
       <el-breadcrumb-item>
         <el-link type="primary" @click="backToDevices">设备 {{ deviceId }}</el-link>
       </el-breadcrumb-item>
-      <el-breadcrumb-item
-        v-for="(dir, i) in pathStack"
-        :key="dir.deviceId"
-      >
+      <el-breadcrumb-item v-for="(dir, i) in pathStack" :key="channelIdOf(dir) ?? dir.id">
         <el-link v-if="i < pathStack.length - 1" type="primary" @click="backTo(i + 1)">
           {{ dir.name }}
         </el-link>
@@ -118,7 +140,9 @@ onMounted(load)
     </el-form>
 
     <el-table v-loading="loading" :data="list" stripe>
-      <el-table-column prop="deviceId" label="通道国标编号" min-width="170" />
+      <el-table-column label="通道国标编号" min-width="170">
+        <template #default="{ row }">{{ channelIdOf(row) ?? '未知' }}</template>
+      </el-table-column>
       <el-table-column prop="name" label="名称" min-width="140" />
       <el-table-column label="类型" width="100">
         <template #default="{ row }">
@@ -128,8 +152,8 @@ onMounted(load)
       </el-table-column>
       <el-table-column label="状态" width="80">
         <template #default="{ row }">
-          <el-tag v-if="row.status" :type="row.status === 'ON' ? 'success' : 'info'">
-            {{ row.status }}
+          <el-tag v-if="row.status !== undefined" :type="isOnline(row) ? 'success' : 'info'">
+            {{ isOnline(row) ? '在线' : '离线' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -142,8 +166,12 @@ onMounted(load)
           <el-button v-if="isCatalog(row)" link type="primary" @click="enterCatalog(row)">
             进入
           </el-button>
-          <el-button v-if="!isCatalog(row)" link type="primary" @click="openPlay(row)">播放</el-button>
-          <el-button v-if="!isCatalog(row)" link type="primary" @click="openRecord(row)">录像</el-button>
+          <el-button v-if="!isCatalog(row)" link type="primary" @click="openPlay(row)"
+            >播放</el-button
+          >
+          <el-button v-if="!isCatalog(row)" link type="primary" @click="openRecord(row)"
+            >录像</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
