@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 
 import { useAuthStore } from '@/stores/auth'
+import LinkageGatewayBridge from '@/components/LinkageGatewayBridge.vue'
 
 const auth = useAuthStore()
 const route = useRoute()
@@ -22,6 +23,7 @@ const activeMenu = computed(() => {
   if (route.path.startsWith('/positions')) return '/positions'
   if (route.path.startsWith('/logs')) return '/logs'
   if (route.path.startsWith('/events')) return '/events'
+  if (route.path.startsWith('/linkage-bindings')) return '/linkage-bindings'
   return route.path
 })
 
@@ -48,11 +50,13 @@ function onLogout() {
         <el-menu-item index="/alarms">报警</el-menu-item>
         <el-menu-item index="/positions">位置</el-menu-item>
         <el-menu-item index="/logs">日志</el-menu-item>
+        <el-menu-item index="/linkage-bindings">视频联动配置</el-menu-item>
         <el-menu-item index="/events">SSV 事件</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
       <el-header class="header">
+        <LinkageGatewayBridge />
         <el-tag v-if="auth.username" class="user" type="info">{{ auth.username }}</el-tag>
         <el-button link type="danger" @click="onLogout">退出</el-button>
       </el-header>

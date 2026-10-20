@@ -107,6 +107,11 @@ const router = createRouter({
           name: 'ssv-event-detail',
           component: () => import('@/views/ssv/SsvEventDetailView.vue'),
         },
+        {
+          path: 'linkage-bindings',
+          name: 'linkage-bindings',
+          component: () => import('@/views/linkage/LinkageBindingsView.vue'),
+        },
       ],
     },
   ],

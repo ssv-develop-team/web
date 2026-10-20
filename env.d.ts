@@ -8,6 +8,10 @@ interface ImportMetaEnv {
   /** wvp-ai YOLO 服务基地址;默认 http://127.0.0.1:18000 */
   /** SSV Agent 只读 API 的开发代理目标；默认 http://127.0.0.1:8765 */
   readonly VITE_SSV_API_PROXY_TARGET?: string
+  /** linkage-gateway WebSocket 地址；默认使用当前 hostname 的 8766 端口 */
+  readonly VITE_LINKAGE_GATEWAY_WS?: string
+  /** linkage-gateway HTTP API 地址；默认从 WebSocket 地址或当前 hostname 推导 */
+  readonly VITE_LINKAGE_GATEWAY_API?: string
 }
 
 interface ImportMeta {
