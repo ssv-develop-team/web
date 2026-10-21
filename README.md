@@ -7,6 +7,7 @@
 - WVP 设备、通道、实时播放、录像回放、媒体服务器、流代理、推流、级联平台和录像计划管理。
 - 用户、API 密钥、告警、设备位置和实时日志管理。
 - 通过独立的只读 SSV API 展示事件列表、事件详情、检测结果、复核记录和证据图片。
+- 通过独立的 `linkage-gateway` 展示点表、维护视频通道绑定，并在变位事件到达时弹出视频。
 
 WVP 请求使用 `/api/`，SSV 事件请求使用 `/ssv-api/`；两者通过 Vite 开发代理分别转发到对应服务。
 
@@ -20,13 +21,14 @@ flowchart LR
     App --> Views[业务页面与播放器]
     Views --> WvpClient[WVP API 适配层\nsrc/api/*]
     Views --> SsvClient[SSV 只读 API 适配层\nsrc/api/ssv.ts]
+    Views --> Gateway[linkage-gateway\nHTTP / WebSocket]
     WvpClient --> ViteProxy[Vite 开发代理]
     SsvClient --> ViteProxy
     ViteProxy -->|/api/、/rtp、WebSocket| WVP[WVP 服务\nVITE_PROXY_TARGET]
     ViteProxy -->|/ssv-api/api/v1\n重写为 /api/v1| SSV[SSV Agent\nVITE_SSV_API_PROXY_TARGET]
 ```
 
-前端负责页面路由、状态和展示；WVP 负责设备、媒体与平台管理，SSV Agent 负责事件及证据的只读查询。
+前端负责页面路由、状态和展示；WVP 负责设备、媒体与平台管理，SSV Agent 负责事件及证据的只读查询，`linkage-gateway` 负责点表、绑定和设备变位联动。
 
 ## 运行方式
 
@@ -40,8 +42,22 @@ flowchart LR
 ### 安装依赖
 
 ```sh
+git submodule update --init --recursive
 npm install
 ```
+
+### 启动视频联动网关（可选）
+
+`external/linkage-gateway` 是锁定版本的 Git submodule，需要 Go `1.27+`，在独立终端中启动：
+
+```sh
+cd external/linkage-gateway
+go run ./cmd/linkage-gateway --config config/linkage-gateway.example.yaml
+```
+
+默认接收 UDP `9301`，HTTP/WebSocket 使用 `8766`，允许前端 Origin `http://localhost:5173`。已有独立网关实例时无需重复启动；前端可通过 `VITE_LINKAGE_GATEWAY_API` 和 `VITE_LINKAGE_GATEWAY_WS` 指定地址。
+
+子模块仅提供源码，不随 `npm run dev` 自动启动，也不包含本机数据库。详见[网关 README](external/linkage-gateway/README.md)和[联动规格](docs/linkage/spec.md)。
 
 ### 启动开发服务
 

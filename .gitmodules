@@ -1,0 +1,3 @@
+[submodule "external/linkage-gateway"]
+	path = external/linkage-gateway
+	url = https://github.com/ssv-develop-team/linkage-gateway.git

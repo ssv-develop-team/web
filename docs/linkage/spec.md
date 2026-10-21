@@ -2,7 +2,7 @@
 
 ## 目标
 
-在 WVP Web UI 中接入同级项目 `linkage-gateway` 的实时事件，并提供点表与视频通道绑定管理。收到绑定完成的变位事件后自动弹出实时视频；设备联动事件与 SSV 视觉事件保持独立。
+在 WVP Web UI 中接入独立项目 `linkage-gateway` 的实时事件，并提供点表与视频通道绑定管理。收到绑定完成的变位事件后自动弹出实时视频；设备联动事件与 SSV 视觉事件保持独立。
 
 ## 范围
 
@@ -21,6 +21,13 @@
 - 使用 `VITE_LINKAGE_GATEWAY_API` 显式指定网关 HTTP API 根地址。
 - 未配置 API 地址时，从 WebSocket 地址派生 API origin；两者均未配置时使用当前页面协议、hostname 和端口 `8766`。
 - 网关 `web.allowed_origins` 必须包含页面 Origin；生产 HTTPS 部署需由反向代理提供 WSS，并允许页面访问网关 REST API。
+
+## 源码集成
+
+- 使用 `external/linkage-gateway` Git submodule 引入 `https://github.com/ssv-develop-team/linkage-gateway.git`，主仓库锁定网关提交，不自动跟随远端分支更新。
+- 克隆后执行 `git submodule update --init --recursive` 获取源码；网关仍是可独立开发、部署的 Go 服务，不参与 npm 构建或自动启动。
+- 子模块不携带数据库、本地配置及生成文件；保留本机原独立目录与运行实例，服务地址配置和协议不变。
+- 发布时先推送网关提交，再推送 Web UI 的子模块引用，确保递归克隆能获取锁定版本。
 
 ## 非目标
 
