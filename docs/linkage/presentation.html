@@ -1235,7 +1235,7 @@
     <canvas class="ascii-bg" aria-hidden="true"></canvas>
     <div class="chrome-min">
       <div class="l">视频联动 · 周会汇报</div>
-      <div class="r">SS · 2026.10.21 · 01 / 09</div>
+      <div class="r">SS · 2026.10.21 · 01 / 07</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
@@ -1244,332 +1244,246 @@
       <h1 data-anim="title" style="align-self:center;font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(11.6vw,19vh);line-height:.94;letter-spacing:-.025em;color:#fff">视频联动</h1>
 
       <div data-anim="bottom" style="display:grid;grid-template-rows:auto auto;gap:1.6vh;border-top:1px solid rgba(255,255,255,.22);padding-top:2vh">
-        <div data-anim="lead" class="lead" style="max-width:52ch;color:rgba(255,255,255,.86)">配置、自动弹窗与源码集成。三项交付的当前状态与待验证项。</div>
+        <div data-anim="lead" class="lead" style="max-width:56ch;color:rgba(255,255,255,.86)">配置功能、变位自动弹视频、网关源码集成。三项工作的实现方式与接入约定。</div>
         <div style="display:flex;justify-content:space-between;align-items:end">
           <div class="t-meta" style="color:rgba(255,255,255,.6)">项目组内部周会 · 约 10 分钟</div>
-          <div class="t-meta" style="color:rgba(255,255,255,.6)">9 页</div>
+          <div class="t-meta" style="color:rgba(255,255,255,.6)">7 页</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 02 · S11 Horizontal Timeline ============ -->
-<section class="slide light" data-layout="S11" data-animate="timeline-walk" data-slide-id="event-path">
+<!-- ============ 02 · 配置入口与数据来源 ============ -->
+<section class="slide light" data-layout="S05" data-animate="stack-build" data-slide-id="binding-entry">
   <div class="canvas-card">
     <div class="chrome-min">
-      <div class="l">事件链路 · Event path</div>
-      <div class="r">02 / 09</div>
+      <div class="l">视频联动配置 · Bindings</div>
+      <div class="r">02 / 07</div>
     </div>
 
-    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:3vh">
-      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.4vh">
-        <div class="t-cat">从报文到画面</div>
-        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(5.2vw,9.2vh);line-height:.98;letter-spacing:-.03em">一条变位事件如何变成画面</h2>
-        <p class="lead" style="max-width:72ch;font-size:max(18px,1.08vw);line-height:1.5;opacity:.78">网关负责匹配与推送，前端只消费已匹配事件；未绑定或未启用的点位不会触发点播。</p>
+    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto 1fr;gap:2vh">
+      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.2vh">
+        <div class="t-cat">入口与数据来源</div>
+        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">新增配置入口，点位读网关，通道选 WVP</h2>
       </div>
+      <p class="lead" style="max-width:78ch;font-size:max(18px,1.16vw);line-height:1.5;opacity:.8">菜单新增“视频联动配置”，路由 /linkage-bindings；页面不另存绑定副本，读写都经过网关 REST API。</p>
 
-      <div class="timeline-h" data-anim="up" style="min-height:46vh">
-        <span class="tl-h-axis" aria-hidden="true"></span>
-        <div class="tl-row">
-          <div class="th-node up">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">01</span><span class="name">报文到达</span><span class="desc">UDP 9301 接收 0x55 变位</span></span>
-          </div>
-          <div class="th-node down">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">02</span><span class="name">点位匹配</span><span class="desc">点位键对应启用绑定</span></span>
-          </div>
-          <div class="th-node up">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">03</span><span class="name">事件推送</span><span class="desc">WS 只推 matched 且非空通道</span></span>
-          </div>
-          <div class="th-node down">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">04</span><span class="name">前端点播</span><span class="desc">用显式 deviceId / channelId</span></span>
-          </div>
-          <div class="th-node up accent">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">05</span><span class="name">弹窗出画</span><span class="desc">播放首个通道并管理生命周期</span></span>
-          </div>
+      <div class="stack-row">
+        <div class="stack-block b-ink">
+          <div class="layer-nb">STEP 01</div>
+          <div class="layer-icon"><i data-lucide="menu"></i></div>
+          <div class="layer-ttl">菜单与路由</div>
+          <div class="layer-desc">新增独立配置页，路由固定为 /linkage-bindings，与 SSV 事件页面分开。</div>
+          <div class="layer-tag">入口 · 独立页面</div>
+        </div>
+        <div class="stack-block b-accent">
+          <div class="layer-nb">STEP 02</div>
+          <div class="layer-icon"><i data-lucide="server"></i></div>
+          <div class="layer-ttl">读取点表</div>
+          <div class="layer-desc">通过 linkage-gateway 的 REST API 获取点位元数据与当前绑定关系。</div>
+          <div class="layer-tag">REST · 点表 · 绑定</div>
+        </div>
+        <div class="stack-block b-grey">
+          <div class="layer-nb">STEP 03</div>
+          <div class="layer-icon"><i data-lucide="monitor-play"></i></div>
+          <div class="layer-ttl">选择通道</div>
+          <div class="layer-desc">从 WVP 设备目录选择设备，再选择其普通视频通道作为绑定目标。</div>
+          <div class="layer-tag">WVP · 设备 · 通道</div>
         </div>
       </div>
 
-      <div class="t-meta" style="display:flex;justify-content:space-between;gap:2vw;border-top:1px solid var(--border-subtle);padding-top:1.6vh">
-        <span>0x43 上传点表，0x55 触发变位</span>
-        <span>未绑定或未启用的点位不会触发点播</span>
-      </div>
+      <div class="t-meta" style="border-top:1px solid var(--border-subtle);padding-top:1.4vh;text-transform:none;letter-spacing:.02em">页面 src/views/linkage/LinkageBindingsView.vue · 网关 API src/api/linkageGateway.ts</div>
     </div>
   </div>
 </section>
 
-<!-- ============ 03 · S08 Duo Compare ============ -->
-<section class="slide dark" data-layout="S08" data-animate="duo-mirror" data-slide-id="auto-popup">
+<!-- ============ 03 · 绑定规则 ============ -->
+<section class="slide dark" data-layout="S08" data-animate="duo-mirror" data-slide-id="binding-rules">
   <div class="canvas-card">
     <div class="chrome-min">
-      <div class="l">自动弹窗 · Auto popup</div>
-      <div class="r">03 / 09</div>
+      <div class="l">绑定规则 · Rules</div>
+      <div class="r">03 / 07</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto;gap:2vh">
       <div data-anim="line" style="display:flex;flex-direction:column;gap:1.4vh">
-        <div class="t-cat">改造前后</div>
-        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">从人工查通道到事件自动弹窗</h2>
+        <div class="t-cat">一个点位，多个通道</div>
+        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">绑定由用户显式选择，不按设备顺序猜</h2>
       </div>
 
-      <div class="duo-compare" style="margin-top:4vh">
+      <div class="duo-compare" style="margin-top:3vh">
         <div class="col">
-          <div class="col-tag" style="color:rgba(255,255,255,.6)"><span class="num" style="color:var(--paper);border-color:var(--paper)">01</span>BEFORE</div>
-          <div class="col-ttl">人工定位与点播</div>
-          <p class="col-desc">报警后由值班人员在点位表、WVP 设备和视频通道之间逐级查找，再手动发起点播。</p>
+          <div class="col-tag" style="color:rgba(255,255,255,.6)"><span class="num" style="color:var(--paper);border-color:var(--paper)">01</span>AVOID</div>
+          <div class="col-ttl">隐式匹配</div>
+          <p class="col-desc">不把设备出现顺序、名称相似度或历史记录当作绑定依据。没有绑定，就不触发。</p>
           <ul class="col-list" style="border-color:rgba(255,255,255,.22)">
-            <li>需要人工确认点位与通道</li>
-            <li>多设备场景容易选错</li>
-            <li>出画时间取决于操作</li>
+            <li>不自动挑选通道</li>
+            <li>不按设备顺序推断</li>
+            <li>不在前端另存副本</li>
           </ul>
         </div>
 
         <span class="vrule" style="background:rgba(255,255,255,.22)"></span>
 
         <div class="col accent">
-          <div class="col-tag" style="color:rgba(255,255,255,.6)"><span class="num">02</span>AFTER</div>
-          <div class="col-ttl">事件到达即弹窗</div>
-          <p class="col-desc">网关只推送已匹配事件；前端按消息中的显式设备与通道 ID 自动点播，复用现有 Jessibuca 播放器。</p>
+          <div class="col-tag" style="color:rgba(255,255,255,.6)"><span class="num">02</span>ADOPT</div>
+          <div class="col-ttl">显式保存</div>
+          <p class="col-desc">一个点位可绑定多个 WVP 通道；每条绑定的启用状态由用户确认后保存，写入网关即参与匹配。</p>
           <ul class="col-list" style="border-color:rgba(255,255,255,.22)">
-            <li>只处理 matched 且通道非空</li>
-            <li>断线后按退避间隔重连</li>
-            <li>关闭弹窗销毁播放器并停止点播</li>
+            <li>一个点位绑定多个通道</li>
+            <li>保存后直接参与事件匹配</li>
+            <li>刷新后仍可读取</li>
           </ul>
         </div>
       </div>
+
+      <div class="t-meta" style="border-top:1px solid rgba(255,255,255,.22);padding-top:1.4vh">绑定关系以网关为准；前端只负责编辑与展示。</div>
     </div>
   </div>
 </section>
 
-<!-- ============ 04 · S04 Six Cells ============ -->
-<section class="slide light" data-layout="S04" data-animate="grid-reveal" data-slide-id="binding-page">
+<!-- ============ 04 · 接入与筛选 ============ -->
+<section class="slide light" data-layout="S11" data-animate="timeline-walk" data-slide-id="event-popup">
   <div class="canvas-card">
     <div class="chrome-min">
-      <div class="l">配置功能 · Bindings</div>
-      <div class="r">04 / 09</div>
-    </div>
-
-    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto auto;gap:2vh">
-      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.2vh">
-        <div class="t-cat">视频联动配置页</div>
-        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">配置页维护点表与视频绑定</h2>
-      </div>
-
-      <p class="lead" style="max-width:76ch;font-size:max(18px,1.18vw);line-height:1.5;opacity:.8">点位来自网关点表，设备与通道来自 WVP；保存后写入网关，直接参与事件匹配。</p>
-
-      <div class="sub-grid-3-2" style="margin-top:1vh">
-        <div class="sub-card" style="border-radius:0">
-          <i data-lucide="list" class="lucide"></i>
-          <span class="nb-corner">01</span>
-          <h4 class="ttl">点位清单</h4>
-          <p class="desc">点位键、设备语义、类型、实物 ID 与联动标志。</p>
-        </div>
-        <div class="sub-card" style="border-radius:0">
-          <i data-lucide="search" class="lucide"></i>
-          <span class="nb-corner">02</span>
-          <h4 class="ttl">检索分页</h4>
-          <p class="desc">按点位键、设备名、类型或实物 ID 过滤。</p>
-        </div>
-        <div class="sub-card" style="border-radius:0">
-          <i data-lucide="server" class="lucide"></i>
-          <span class="nb-corner">03</span>
-          <h4 class="ttl">设备选择</h4>
-          <p class="desc">从 WVP 设备目录选择，并显示在线状态。</p>
-        </div>
-        <div class="sub-card" style="border-radius:0">
-          <i data-lucide="link" class="lucide"></i>
-          <span class="nb-corner">04</span>
-          <h4 class="ttl">通道绑定</h4>
-          <p class="desc">只列出设备下的普通视频通道，避免误选目录节点。</p>
-        </div>
-        <div class="sub-card" style="border-radius:0">
-          <i data-lucide="layers" class="lucide"></i>
-          <span class="nb-corner">05</span>
-          <h4 class="ttl">多通道</h4>
-          <p class="desc">一个点位可保存多条绑定，并单独设置启用状态。</p>
-        </div>
-        <div class="sub-card" style="border-radius:0">
-          <i data-lucide="save" class="lucide"></i>
-          <span class="nb-corner">06</span>
-          <h4 class="ttl">持久化</h4>
-          <p class="desc">保存通过网关 REST API 写入 SQLite，刷新后仍可读取。</p>
-        </div>
-      </div>
-
-      <div class="t-meta" style="border-top:1px solid var(--border-subtle);padding-top:1.4vh">绑定关系以网关为准，前端不另存一份副本</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 05 · S05 Three Layers ============ -->
-<section class="slide hero light" data-layout="S05" data-animate="stack-build" data-slide-id="boundaries">
-  <div class="canvas-card">
-    <div class="chrome-min">
-      <div class="l">系统边界 · Responsibilities</div>
-      <div class="r">05 / 09</div>
-    </div>
-
-    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto 1fr;gap:2vh">
-      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.2vh">
-        <div class="t-cat">三方分工</div>
-        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">三个系统的职责边界</h2>
-      </div>
-      <p class="lead" style="max-width:78ch;font-size:max(18px,1.16vw);line-height:1.5;opacity:.8">网关不推断视频通道，WVP 不解析国网报文，Web UI 不承担媒体转发。</p>
-
-      <div class="stack-row" style="margin-top:2vh">
-        <div class="stack-block b-ink">
-          <div class="layer-nb">LAYER 01</div>
-          <div class="layer-icon"><i data-lucide="layout-dashboard"></i></div>
-          <div class="layer-ttl">WVP Web UI</div>
-          <div class="layer-desc">维护点位绑定，接收网关事件，按显式设备与通道 ID 发起点播，管理弹窗和播放器生命周期。</div>
-          <div class="layer-tag">配置 · 弹窗 · 播放器</div>
-        </div>
-        <div class="stack-block b-accent">
-          <div class="layer-nb">LAYER 02</div>
-          <div class="layer-icon"><i data-lucide="radio-tower"></i></div>
-          <div class="layer-ttl">linkage-gateway</div>
-          <div class="layer-desc">接收 UDP 点表与变位报文，使用 SQLite 保存点位、绑定和事件，通过 REST 与 WebSocket 提供数据。</div>
-          <div class="layer-tag">接入 · 匹配 · 分发</div>
-        </div>
-        <div class="stack-block b-grey">
-          <div class="layer-nb">LAYER 03</div>
-          <div class="layer-icon"><i data-lucide="monitor-play"></i></div>
-          <div class="layer-ttl">WVP / 媒体节点</div>
-          <div class="layer-desc">提供设备与通道目录，执行 startPlay / stopPlay，并输出浏览器可播放的 FLV 流。</div>
-          <div class="layer-tag">通道 · 点播 · 媒体</div>
-        </div>
-      </div>
-
-      <div class="t-meta" style="margin-top:1vh;border-top:1px solid var(--border-subtle);padding-top:1.4vh">接口边界：UDP 9301 · HTTP / WebSocket 8766 · WVP startPlay</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 06 · S20 Stacked KPI Ledger ============ -->
-<section class="slide dark" data-layout="S20" data-animate="stacked-ledger" data-slide-id="source-integration">
-  <div class="canvas-card">
-    <div class="chrome-min">
-      <div class="l">源码集成 · Source</div>
-      <div class="r">06 / 09</div>
-    </div>
-
-    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto 1fr auto;gap:2vh">
-      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.2vh">
-        <div class="t-cat">Git submodule</div>
-        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">源码集成：固定引用，独立运行</h2>
-      </div>
-      <p class="lead" style="max-width:78ch;font-size:max(18px,1.16vw);line-height:1.5;opacity:.8">网关仍是独立 Go 服务；Web UI 只锁定源码版本，不参与 npm 构建，也不随开发服务器自动启动。</p>
-
-      <div data-anim="ledger" style="display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.22)">
-        <div class="ledger-row" style="display:grid;grid-template-columns:8fr 8fr auto;gap:2vw;align-items:center;padding:1.5vh 0;border-bottom:1px solid rgba(255,255,255,.16)">
-          <div class="ledger-num" style="font-family:var(--sans);font-weight:200;font-size:min(7vw,11.6vh);line-height:.9;letter-spacing:-.04em">1<span style="font-size:.3em;font-weight:300;opacity:.55;margin-left:.12em">个</span></div>
-          <div class="ledger-label"><div class="t-cat" style="color:rgba(255,255,255,.6)">Git 子模块</div><div class="t-body" style="color:var(--paper);margin-top:.6vh">external/linkage-gateway，锁定网关提交</div></div>
-          <div class="ledger-icon"><i data-lucide="git-branch" style="width:1.8vw;height:1.8vw"></i></div>
-        </div>
-        <div class="ledger-row" style="display:grid;grid-template-columns:8fr 8fr auto;gap:2vw;align-items:center;padding:1.5vh 0;border-bottom:1px solid rgba(255,255,255,.16)">
-          <div class="ledger-num" style="font-family:var(--sans);font-weight:200;font-size:min(7vw,11.6vh);line-height:.9;letter-spacing:-.04em">8766</div>
-          <div class="ledger-label"><div class="t-cat" style="color:rgba(255,255,255,.6)">HTTP / WebSocket</div><div class="t-body" style="color:var(--paper);margin-top:.6vh">前端读取点表与绑定、接收实时事件</div></div>
-          <div class="ledger-icon"><i data-lucide="globe" style="width:1.8vw;height:1.8vw"></i></div>
-        </div>
-        <div class="ledger-row" style="display:grid;grid-template-columns:8fr 8fr auto;gap:2vw;align-items:center;padding:1.5vh 0;border-bottom:1px solid rgba(255,255,255,.16)">
-          <div class="ledger-num" style="font-family:var(--sans);font-weight:200;font-size:min(7vw,11.6vh);line-height:.9;letter-spacing:-.04em">9301</div>
-          <div class="ledger-label"><div class="t-cat" style="color:rgba(255,255,255,.6)">UDP</div><div class="t-body" style="color:var(--paper);margin-top:.6vh">接收 0x43 点表与 0x55 变位报文</div></div>
-          <div class="ledger-icon"><i data-lucide="radio" style="width:1.8vw;height:1.8vw"></i></div>
-        </div>
-        <div class="ledger-row" style="display:grid;grid-template-columns:8fr 8fr auto;gap:2vw;align-items:center;padding:1.5vh 0;border-bottom:1px solid rgba(255,255,255,.16)">
-          <div class="ledger-num" style="font-family:var(--sans);font-weight:200;font-size:min(7vw,11.6vh);line-height:.9;letter-spacing:-.04em">5<span style="font-size:.3em;font-weight:300;opacity:.55;margin-left:.12em">组</span></div>
-          <div class="ledger-label"><div class="t-cat" style="color:rgba(255,255,255,.6)">Go 测试</div><div class="t-body" style="color:var(--paper);margin-top:.6vh">config、linkage、protocol、store、web</div></div>
-          <div class="ledger-icon"><i data-lucide="test-tube" style="width:1.8vw;height:1.8vw"></i></div>
-        </div>
-      </div>
-
-      <div class="t-meta" style="border-top:1px solid rgba(255,255,255,.22);padding-top:1.4vh">子模块不携带数据库、本地配置与构建产物；发布时先推网关提交，再更新 Web UI 引用</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 07 · S12 Manifesto + Ink Banner ============ -->
-<section class="slide light" data-layout="S12" data-animate="manifesto" data-slide-id="scope">
-  <div class="canvas-card">
-    <div class="chrome-min">
-      <div class="l">当前边界 · Scope</div>
-      <div class="r">07 / 09</div>
+      <div class="l">变位自动弹视频 · Popup</div>
+      <div class="r">04 / 07</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:3vh">
+      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.4vh">
+        <div class="t-cat">接入与筛选</div>
+        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(5.2vw,9.2vh);line-height:.98;letter-spacing:-.03em">从网关消息到一次点播</h2>
+        <p class="lead" style="max-width:74ch;font-size:max(18px,1.08vw);line-height:1.5;opacity:.78">应用级 WebSocket 常驻；断线自动重连，组件销毁时清理连接与重连逻辑。</p>
+      </div>
+
+      <div class="timeline-h" data-anim="up" style="min-height:46vh">
+        <span class="tl-h-axis" aria-hidden="true"></span>
+        <div class="tl-row" style="grid-template-columns:repeat(4,1fr)">
+          <div class="th-node up">
+            <span class="dot"></span>
+            <span class="label"><span class="yr">01</span><span class="name">建立连接</span><span class="desc">全局 Bridge 接入网关 WS</span></span>
+          </div>
+          <div class="th-node down">
+            <span class="dot"></span>
+            <span class="label"><span class="yr">02</span><span class="name">校验消息</span><span class="desc">只接受合法的 linkage_event</span></span>
+          </div>
+          <div class="th-node up">
+            <span class="dot"></span>
+            <span class="label"><span class="yr">03</span><span class="name">判断匹配</span><span class="desc">matched 且 channels 非空</span></span>
+          </div>
+          <div class="th-node down accent">
+            <span class="dot"></span>
+            <span class="label"><span class="yr">04</span><span class="name">发起点播</span><span class="desc">用显式设备与通道 ID</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-meta" style="display:flex;justify-content:space-between;gap:2vw;border-top:1px solid var(--border-subtle);padding-top:1.6vh">
+        <span>未绑定或未启用的点位不会触发点播</span>
+        <span>断线期间的事件不补播</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · 播放与清理 ============ -->
+<section class="slide dark" data-layout="S12" data-animate="manifesto" data-slide-id="player-lifecycle">
+  <div class="canvas-card">
+    <div class="chrome-min">
+      <div class="l">播放与清理 · Lifecycle</div>
+      <div class="r">05 / 07</div>
+    </div>
+
+    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
       <div data-anim="line" style="display:flex;flex-direction:column;gap:1.2vh">
-        <div class="t-cat">本次不做的事</div>
-        <div style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">三项明确的实现边界</div>
+        <div class="t-cat">弹窗行为</div>
+        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">只播一路，但每条退出路径都要收干净</h2>
+        <p class="lead" style="max-width:76ch;font-size:max(18px,1.08vw);line-height:1.5;opacity:.78">复用现有 Jessibuca 播放器；关闭、失败与卸载走同一套清理逻辑。</p>
       </div>
 
       <div style="display:flex;flex-direction:column;justify-content:center">
-        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.8vh 0;border-top:1px solid var(--border-subtle)">
-          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent)">01</div>
-          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">只播首个绑定通道</div>
-          <p class="t-body" style="color:var(--text-secondary)">一个事件最多自动播放 channels[0]；其余绑定只显示数量，不做拼屏。</p>
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.1vh 0;border-top:1px solid rgba(255,255,255,.18)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent-bright)">01</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">默认播放 channels[0]</div>
+          <p class="t-body" style="color:rgba(255,255,255,.72)">一次事件只自动播放首个绑定通道；其他绑定显示数量，暂不做多画面拼屏。</p>
         </div>
-        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.8vh 0;border-top:1px solid var(--border-subtle)">
-          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent)">02</div>
-          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">不推断设备与通道</div>
-          <p class="t-body" style="color:var(--text-secondary)">绑定必须由用户显式选择；网关不按名称、顺序或历史记录猜测通道。</p>
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.1vh 0;border-top:1px solid rgba(255,255,255,.18)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent-bright)">02</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">关闭弹窗</div>
+          <p class="t-body" style="color:rgba(255,255,255,.72)">销毁播放器实例；点播已建立时调用 stopPlay，释放媒体会话。</p>
         </div>
-        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.8vh 0;border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)">
-          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent)">03</div>
-          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">不补播断线事件</div>
-          <p class="t-body" style="color:var(--text-secondary)">WebSocket 重连只恢复连接；断线期间的事件不回放、不补弹窗。</p>
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.1vh 0;border-top:1px solid rgba(255,255,255,.18)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent-bright)">03</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">点播失败</div>
+          <p class="t-body" style="color:rgba(255,255,255,.72)">弹窗显示可见错误，不留下空播放器或悬挂的点播请求。</p>
+        </div>
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:2.1vh 0;border-top:1px solid rgba(255,255,255,.18);border-bottom:1px solid rgba(255,255,255,.18)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent-bright)">04</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">页面卸载</div>
+          <p class="t-body" style="color:rgba(255,255,255,.72)">停止重连、移除事件监听并销毁播放器，不在后台保留连接。</p>
         </div>
       </div>
 
-      <div data-anim="up" class="card-ink" style="margin:0 -5vw;padding:2.6vh 5vw;display:flex;justify-content:space-between;align-items:center;gap:2vw;border-radius:0">
-        <div style="font-family:var(--sans),var(--sans-zh);font-weight:300;font-size:min(2.2vw,4.2vh);line-height:1.2">单路 · 显式绑定 · 实时优先</div>
-        <div class="t-meta" style="color:rgba(255,255,255,.6)">CURRENT SCOPE</div>
-      </div>
+      <div class="t-meta" style="border-top:1px solid rgba(255,255,255,.22);padding-top:1.4vh;text-transform:none;letter-spacing:.02em">src/components/LinkageVideoDialog.vue · src/components/LinkageGatewayBridge.vue</div>
     </div>
   </div>
 </section>
 
-<!-- ============ 08 · S09 Dot Matrix Statement ============ -->
-<section class="slide hero dark" data-layout="S09" data-animate="statement" data-slide-id="verification">
+<!-- ============ 06 · 源码引入方式 ============ -->
+<section class="slide light" data-layout="S12" data-animate="manifesto" data-slide-id="source-submodule">
   <div class="canvas-card">
-    <span class="dot-mat" aria-hidden="true" style="position:absolute;right:0;top:8vh;width:30vw;height:30vw;color:var(--paper);opacity:.22"></span>
     <div class="chrome-min">
-      <div class="l">验证状态 · Verification</div>
-      <div class="r">08 / 09</div>
+      <div class="l">网关源码集成 · Source</div>
+      <div class="r">06 / 07</div>
     </div>
 
-    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:3vh">
-      <div data-anim="line" class="t-cat" style="color:rgba(255,255,255,.65)">自动化与现场</div>
-
-      <h2 data-anim="title" style="align-self:center;font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(8.4vw,15vh);line-height:.96;letter-spacing:-.035em;color:var(--paper)">自动化验证已通过<br/>现场验证尚未开始</h2>
-
-      <div data-anim="bottom" style="display:grid;grid-template-columns:7fr 5fr;gap:4vw;border-top:1px solid rgba(255,255,255,.22);padding-top:2vh">
-        <p class="body" style="color:rgba(255,255,255,.78);max-width:52ch">前端 3 个测试文件 11 项通过，网关 5 组 Go 测试通过；真实摄像机出画、关闭停流与 HTTPS / WSS 部署仍需现场确认。</p>
-        <div class="t-meta" style="color:rgba(255,255,255,.6);text-align:right">待验证：自动弹窗 · 实际出画 · 停流 · WSS</div>
+    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
+      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.2vh">
+        <div class="t-cat">Git submodule</div>
+        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.7vw,8.2vh);line-height:1.02;letter-spacing:-.03em">网关以子模块引入，独立编译与启动</h2>
+        <p class="lead" style="max-width:78ch;font-size:max(18px,1.16vw);line-height:1.5;opacity:.8">external/linkage-gateway 锁定网关提交；Web UI 只引用源码，不参与构建，也不随开发服务器启动。</p>
       </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:center">
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:3.4vh 0;border-top:1px solid var(--border-subtle)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent)">01</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">引入方式</div>
+          <p class="t-body" style="color:var(--text-secondary)">Git submodule 固定提交，不自动跟随远端分支；递归克隆即可获取同一版本。</p>
+        </div>
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:3.4vh 0;border-top:1px solid var(--border-subtle)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent)">02</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">启动方式</div>
+          <p class="t-body" style="color:var(--text-secondary)">README.md:42 给出安装与启动命令；在独立终端运行，默认 UDP 9301、HTTP/WebSocket 8766。</p>
+        </div>
+        <div data-anim="up" style="display:grid;grid-template-columns:1.2fr 3fr 7fr;gap:2vw;align-items:baseline;padding:3.4vh 0;border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)">
+          <div style="font-family:var(--sans);font-weight:200;font-size:min(3.2vw,5.6vh);line-height:1;color:var(--accent)">03</div>
+          <div style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(20px,1.6vw);line-height:1.25">启动边界</div>
+          <p class="t-body" style="color:var(--text-secondary)">不参与 npm 构建，npm run dev 不会拉起网关；子模块不携带本机数据库与配置。</p>
+        </div>
+      </div>
+
+      <div class="t-meta" style="border-top:1px solid var(--border-subtle);padding-top:1.4vh">发布顺序：先推送网关提交，再更新 Web UI 的子模块引用。</div>
     </div>
   </div>
 </section>
 
-<!-- ============ 09 · S10 Split Closing ============ -->
-<section class="slide split" data-layout="S10" data-animate="split-statement" data-slide-id="closing">
+<!-- ============ 07 · 后端能力接入规范 ============ -->
+<section class="slide split" data-layout="S10" data-animate="split-statement" data-slide-id="backend-convention">
   <div class="canvas-card">
     <div class="split-half">
       <div class="half b-accent" style="padding:5.6vh 3.6vw 6.4vh;justify-content:space-between;position:relative;overflow:hidden">
         <canvas class="ascii-bg" aria-hidden="true"></canvas>
         <div class="chrome-min" style="margin-bottom:0;position:relative;z-index:1">
-          <div class="l">09 / 09</div>
-          <div class="r">NEXT</div>
+          <div class="l">07 / 07</div>
+          <div class="r">CONVENTION</div>
         </div>
 
         <div data-anim="manifesto" style="display:flex;flex-direction:column;gap:2vh;position:relative;z-index:1">
-          <div class="t-meta" style="color:rgba(255,255,255,.78);letter-spacing:.22em;margin-bottom:1.6vh">下一步</div>
-          <h2 style="font-family:var(--sans),var(--sans-zh);font-size:min(7.4vw,13vh);line-height:.96;letter-spacing:-.025em;font-weight:200;color:#fff">先跑通一条<br/><span style="font-style:italic;font-weight:300">再扩展</span></h2>
-          <div style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,1vw);line-height:1.6;color:rgba(255,255,255,.82);font-weight:400;max-width:34ch;margin-top:1.4vh">用一台已绑定摄像机完成端到端验证，再讨论多路拼屏与事件历史。</div>
+          <div class="t-meta" style="color:rgba(255,255,255,.78);letter-spacing:.22em;margin-bottom:1.2vh">接入约定</div>
+          <h2 style="font-family:var(--sans),var(--sans-zh);font-size:min(6vw,10.4vh);line-height:1.02;letter-spacing:-.02em;font-weight:200;color:#fff">后端独立成服务<br/><span style="font-style:italic;font-weight:300">前端只锁版本</span></h2>
+          <div style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,1vw);line-height:1.6;color:rgba(255,255,255,.82);font-weight:400;max-width:36ch;margin-top:1.2vh">子模块解决源码在哪；VITE_* 解决服务地址。</div>
         </div>
 
         <div data-anim="signature" style="display:flex;justify-content:space-between;align-items:end;border-top:1px solid rgba(255,255,255,.22);padding-top:2vh;position:relative;z-index:1">
@@ -1580,36 +1494,43 @@
 
       <div class="half" style="padding:5.6vh 3.6vw 6.4vh;justify-content:flex-start">
         <div class="chrome-min">
-          <div class="l">本周结论</div>
-          <div class="r">03 ITEMS</div>
+          <div class="l">后续新增后端能力</div>
+          <div class="r">04 STEPS</div>
         </div>
 
         <div style="flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center">
-        <p class="lead" style="font-size:max(18px,1.05vw);line-height:1.5;opacity:.72">三项交付的当前状态与下一步。</p>
+          <p class="lead" style="font-size:max(18px,1.05vw);line-height:1.5;opacity:.72">网关按这套方式接入，后续子功能沿用同一套步骤。</p>
 
-        <ul class="takeaway-list" data-anim="rules" style="margin-top:4vh;list-style:none;display:flex;flex-direction:column;gap:0">
-          <li style="display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:start;padding:2.6vh 0;border-top:1px solid var(--border-subtle)">
-            <div style="font-family:var(--sans);font-weight:200;font-size:min(4.4vw,7.8vh);line-height:.9;color:var(--text-primary)">01</div>
-            <div>
-              <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.6vw);line-height:1.2;color:var(--text-primary);margin-bottom:1vh">配置页可用</h3>
-              <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.94vw);line-height:1.55;color:var(--text-secondary)">点位清单、WVP 设备与通道选择、多绑定保存均已实现。</p>
+          <div data-anim="rules" style="margin-top:3.4vh;display:flex;flex-direction:column">
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:1.6vw;align-items:start;padding:2vh 0;border-top:1px solid var(--border-subtle)">
+              <div style="font-family:var(--sans);font-weight:200;font-size:min(2.6vw,4.4vh);line-height:.95;color:var(--text-primary)">01</div>
+              <div>
+                <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.5vw);line-height:1.2;color:var(--text-primary);margin-bottom:.6vh">独立仓库</h3>
+                <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.92vw);line-height:1.5;color:var(--text-secondary)">后端能力单独开发、测试与部署，README 写清依赖、端口和启动命令。</p>
+              </div>
             </div>
-          </li>
-          <li style="display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:start;padding:2.6vh 0;border-top:1px solid var(--border-subtle)">
-            <div style="font-family:var(--sans);font-weight:200;font-size:min(4.4vw,7.8vh);line-height:.9;color:var(--text-primary)">02</div>
-            <div>
-              <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.6vw);line-height:1.2;color:var(--text-primary);margin-bottom:1vh">自动弹窗链路已接通</h3>
-              <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.94vw);line-height:1.55;color:var(--text-secondary)">重连、事件筛选、单路点播与关闭停流已有测试覆盖。</p>
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:1.6vw;align-items:start;padding:2vh 0;border-top:1px solid var(--border-subtle)">
+              <div style="font-family:var(--sans);font-weight:200;font-size:min(2.6vw,4.4vh);line-height:.95;color:var(--text-primary)">02</div>
+              <div>
+                <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.5vw);line-height:1.2;color:var(--text-primary);margin-bottom:.6vh">锁定引用</h3>
+                <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.92vw);line-height:1.5;color:var(--text-secondary)">主仓库以 submodule 固定提交，升级是一次显式改动，不跟随远端分支。</p>
+              </div>
             </div>
-          </li>
-          <li style="display:grid;grid-template-columns:auto 1fr;gap:2vw;align-items:start;padding:2.6vh 0;border-top:1px solid var(--border-subtle);border-bottom:2px solid var(--accent)">
-            <div style="font-family:var(--sans);font-weight:200;font-size:min(4.4vw,7.8vh);line-height:.9;color:var(--accent)">03</div>
-            <div>
-              <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.6vw);line-height:1.2;color:var(--accent);margin-bottom:1vh">待真实摄像机联调</h3>
-              <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.94vw);line-height:1.55;color:var(--text-secondary)">确认实际出画、停流、允许 Origin 与生产 WSS 配置。</p>
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:1.6vw;align-items:start;padding:2vh 0;border-top:1px solid var(--border-subtle)">
+              <div style="font-family:var(--sans);font-weight:200;font-size:min(2.6vw,4.4vh);line-height:.95;color:var(--text-primary)">03</div>
+              <div>
+                <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.5vw);line-height:1.2;color:var(--text-primary);margin-bottom:.6vh">显式配置</h3>
+                <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.92vw);line-height:1.5;color:var(--text-secondary)">前端通过 VITE_* 指定 REST 与 WebSocket 地址，不在页面里写死服务位置。</p>
+              </div>
             </div>
-          </li>
-        </ul>
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:1.6vw;align-items:start;padding:2vh 0;border-top:1px solid var(--border-subtle);border-bottom:2px solid var(--accent)">
+              <div style="font-family:var(--sans);font-weight:200;font-size:min(2.6vw,4.4vh);line-height:.95;color:var(--accent)">04</div>
+              <div>
+                <h3 style="font-family:var(--sans),var(--sans-zh);font-weight:400;font-size:max(18px,1.5vw);line-height:1.2;color:var(--accent);margin-bottom:.6vh">独立生命周期</h3>
+                <p style="font-family:var(--sans),var(--sans-zh);font-size:max(16px,.92vw);line-height:1.5;color:var(--text-secondary)">不并入 npm 构建，不随 dev server 启动；部署、升级与排障各自进行。</p>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1626,109 +1547,90 @@
 const SPEAKER_NOTES = [
   {
     id: 'cover', title: '视频联动', section: '开场', minutes: 0.4,
-    purpose: '交代本次汇报覆盖的三项交付和讲述范围',
+    purpose: '交代本次汇报的三项工作和讲述顺序',
     talk: [
-      '本次只讲三件事：绑定配置页、事件自动弹窗、网关源码集成',
-      '重点说明当前可用状态与仍未验证的部分',
-      '协议字段和代码细节不展开，留给讨论'
+      '本次只讲三件事：联动配置页、变位自动弹视频、网关源码集成',
+      '前两项是功能，第三项是接入方式和后续约定',
+      '协议细节和代码实现不逐行展开，需要时再讨论'
     ],
-    transition: '先看一条变位事件如何从网关走到浏览器画面',
+    transition: '先看配置页的数据从哪里来',
     cue: '确认观众屏已同步后开始'
   },
   {
-    id: 'event-path', title: '一条变位事件如何变成画面', section: '事件链路', minutes: 1.3,
-    purpose: '让观众先建立端到端链路认知',
+    id: 'binding-entry', title: '新增配置入口', section: '配置功能', minutes: 1.3,
+    purpose: '说明配置页的位置、数据来源和操作对象',
     talk: [
-      '0x43 点表先建立点位元数据，0x55 变位才触发联动',
-      '网关按点位键匹配已启用的绑定，只推送 matched 且通道非空的事件',
-      '前端不猜通道，直接使用消息里的 deviceId 和 channelId 调用 startPlay',
-      '弹窗复用现有 Jessibuca 播放器，当前播放首个绑定通道'
+      '菜单新增“视频联动配置”，路由是 /linkage-bindings，独立于 SSV 事件页面',
+      '点位和绑定关系都从 linkage-gateway 的 REST API 读取，前端不另存一份',
+      '设备与通道来自 WVP，先选设备，再选它下面的普通视频通道',
+      '页面实现是 LinkageBindingsView.vue，网关客户端是 api/linkageGateway.ts'
     ],
-    transition: '链路清楚后，对比改造前后值班人员的操作差异',
-    advance: '讲完第 05 步后翻页'
+    transition: '数据来源清楚后，看绑定关系怎么保存',
+    cue: '可指出底部两个文件路径，说明改动范围'
   },
   {
-    id: 'auto-popup', title: '从人工查通道到事件自动弹窗', section: '自动弹窗', minutes: 1.1,
-    purpose: '说明自动弹窗替代了哪一段人工操作',
+    id: 'binding-rules', title: '绑定由用户显式选择', section: '配置功能', minutes: 1.4,
+    purpose: '强调绑定规则：不猜、可多绑、以网关为准',
     talk: [
-      '改造前要在点位表、设备和通道之间逐级查找，出画取决于值班操作',
-      '改造后事件到达即按显式绑定自动点播，减少查找和选错',
-      '客户端带断线重连；关闭弹窗会销毁播放器并停止已建立的点播',
-      '只处理已匹配事件，未绑定或未启用的点位不会触发'
+      '不做隐式匹配：不按设备出现顺序、名称相似度或历史记录挑通道',
+      '一个点位可以绑定多个 WVP 通道，每条绑定单独设置启用状态',
+      '绑定由用户确认后保存，写入网关后直接参与事件匹配',
+      '刷新后从网关重新读取，前端不维护本地副本'
     ],
-    transition: '自动弹窗依赖准确的绑定关系，接下来看配置页',
-    cue: '可指向右侧 AFTER 的三条列表'
+    transition: '有了准确的绑定，事件到达后才能直接点播',
+    delivery: '“不猜”这一点说清楚，它是后面自动弹窗可信的前提'
   },
   {
-    id: 'binding-page', title: '配置页维护点表与视频绑定', section: '配置功能', minutes: 1.3,
-    purpose: '说明配置页能查看和维护哪些数据',
+    id: 'event-popup', title: '从网关消息到一次点播', section: '自动弹视频', minutes: 1.4,
+    purpose: '说明全局接入、消息筛选和点播参数来源',
     talk: [
-      '页面展示点位键、设备语义、类型、实物 ID 和联动标志',
-      '支持按点位键、设备名、类型或实物 ID 检索和分页',
-      '编辑时从 WVP 设备目录选择设备，再选择其普通视频通道',
-      '一个点位可保存多条绑定和启用状态，保存写入网关 SQLite'
+      '应用级 Bridge 常驻接入网关 WebSocket，断线自动重连',
+      '只处理合法的 linkage_event，并且要求已匹配、通道列表非空',
+      '点播直接使用消息里的 deviceId 和 channelId，不在前端二次查找',
+      '组件销毁时停止重连并移除监听；断线期间的事件不补播',
+      '相关文件是 LinkageGatewayBridge.vue'
     ],
-    transition: '绑定完成后，需要明确三方各自负责什么',
-    interaction: '如时间允许，可现场打开配置页演示一次保存'
+    transition: '点播发起后，播放器本身还有一套生命周期',
+    advance: '讲完第 04 步后翻页'
   },
   {
-    id: 'boundaries', title: '三个系统的职责边界', section: '系统边界', minutes: 1.2,
-    purpose: '划清 Web UI、网关与 WVP 的职责，避免后续重复建设',
+    id: 'player-lifecycle', title: '只播一路，清理要完整', section: '自动弹视频', minutes: 1.2,
+    purpose: '说明当前播放范围和所有退出路径',
     talk: [
-      'Web UI 负责配置、事件接收、弹窗和播放器生命周期',
-      '网关负责 UDP 协议、点表与绑定持久化、事件分发，不推断通道也不播放视频',
-      'WVP 与媒体节点负责通道目录、点播接口和 FLV 输出',
-      '三方通过 HTTP / WebSocket 和 WVP 接口通信，不共享数据库'
+      '默认播放 channels[0]；其他绑定只显示数量，暂不做多画面拼屏',
+      '关闭弹窗时销毁播放器，已建立的点播调用 stopPlay',
+      '点播失败时给出可见错误，不留下空播放器或悬挂请求',
+      '页面卸载时停止重连、移除监听并销毁播放器',
+      '相关文件是 LinkageVideoDialog.vue'
     ],
-    transition: '这些边界通过独立仓库和固定子模块版本来保证',
-    delivery: '这一页语速放慢，边界是后续扩展的前提'
+    transition: '功能讲完，最后看网关源码怎么进主仓库',
+    cue: '这一页四条都是退出路径，不要只讲关闭弹窗'
   },
   {
-    id: 'source-integration', title: '源码集成：固定引用，独立运行', section: '源码交付', minutes: 1.1,
-    purpose: '说明网关源码如何进入 Web UI 仓库，同时保持独立部署',
+    id: 'source-submodule', title: '网关以子模块引入', section: '源码集成', minutes: 1.2,
+    purpose: '说明源码位置、启动方式和与前端构建的边界',
     talk: [
-      '网关使用独立 Git 仓库，Web UI 在 external/linkage-gateway 锁定具体提交',
-      '默认 HTTP / WebSocket 端口 8766，UDP 端口 9301',
-      '网关 5 组 Go 测试覆盖配置、协议、存储、服务和 Web 层',
-      '子模块不携带数据库和本地配置，不参与 npm 构建，也不随开发服务器启动'
+      '网关在 external/linkage-gateway 以 Git submodule 引入，锁定具体提交',
+      'README.md 第 42 行给出安装与启动命令，默认 UDP 9301、HTTP/WebSocket 8766',
+      '网关在独立终端运行，不参与 npm 构建，npm run dev 不会拉起它',
+      '子模块只带源码，不包含本机数据库、配置和构建产物',
+      '发布时先推网关提交，再更新 Web UI 的子模块引用'
     ],
-    transition: '集成方式明确后，再看本次刻意不做的三件事',
-    cue: '强调“固定引用”而不是跟随远端分支'
+    transition: '这不只是一次引入，也确定了以后新增后端能力的方式',
+    cue: '强调“锁定提交”，不是跟随远端分支'
   },
   {
-    id: 'scope', title: '三项明确的实现边界', section: '当前边界', minutes: 0.9,
-    purpose: '提前说明范围，避免把单路联动误解为完整拼屏方案',
+    id: 'backend-convention', title: '后端能力的接入约定', section: '接入约定', minutes: 1.4,
+    purpose: '把这次集成上升为可复用的接入规范',
     talk: [
-      '每个事件只自动播放首个绑定通道，其余通道只显示数量',
-      '设备与通道必须由用户显式绑定，网关不做任何推断',
-      'WebSocket 重连只恢复连接，不补播断线期间的历史事件',
-      '先把一条链路做稳，再评估多路拼屏和事件历史'
+      '网关集成真正确定的是：Web UI 后续新增子功能时，后端能力怎么接',
+      '第一步，后端独立成仓库，自己测试、部署，README 写清依赖和启动方式',
+      '第二步，主仓库用 submodule 锁定提交，升级是一次显式改动',
+      '第三步，前端通过 VITE_* 指定 REST 和 WebSocket 地址，不写死服务位置',
+      '第四步，后端不进 npm 构建、不随 dev server 启动；后续子功能按这四步接入'
     ],
-    transition: '最后区分已经验证通过的和仍需现场确认的',
-    advance: '讲完三条边界后翻页'
-  },
-  {
-    id: 'verification', title: '自动化通过，现场待验证', section: '验证状态', minutes: 0.8,
-    purpose: '如实区分自动化验证结果与现场验证缺口',
-    talk: [
-      '前端 3 个测试文件 11 项通过，覆盖协议解析、弹窗和配置页',
-      '网关 5 组 Go 测试通过',
-      '真实摄像机出画、关闭停流尚未现场确认',
-      'HTTPS 部署还需要反向代理提供 WSS，并配置允许的 Origin'
-    ],
-    transition: '收束到下一步的现场联调安排',
-    delivery: '“尚未开始”不要说得含糊，明确是待验证项'
-  },
-  {
-    id: 'closing', title: '先跑通一条，再扩展', section: '收束', minutes: 0.8,
-    purpose: '收束全场并给出下一步动作',
-    talk: [
-      '配置页、自动弹窗链路和源码集成已经完成',
-      '下一步用一台已绑定摄像机做端到端验证',
-      '确认出画、停流、WSS 和 Origin 后，再讨论多路与历史事件'
-    ],
-    transition: '结束汇报，进入讨论和联调排期',
-    cue: '停顿后致谢'
+    transition: '汇报结束，进入讨论',
+    delivery: '这是本次汇报的重点页，四条按顺序讲完再停顿'
   }
 ];
 window.__SPEAKER_NOTES__ = SPEAKER_NOTES;
