@@ -1170,6 +1170,46 @@
   }
   .slide.dark .canvas-card .chrome-min,.split-half .half.b-ink .canvas-card .chrome-min{color:rgba(255,255,255,.62)}
 
+  /* ============ 交互流程图 (S17) ============
+     SVG 只画几何与箭头；节点文字全部由 HTML 承载，保证可读与可编辑。 */
+  .flow-canvas{position:relative;width:100%;aspect-ratio:1400/460;margin-top:1.2vh}
+  .flow-links{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .flow-links .edge{fill:none;stroke:var(--grey-3);stroke-width:1.4}
+  .flow-links .diamond{fill:var(--paper);stroke:var(--grey-3);stroke-width:1.4}
+  .flow-node{
+    position:absolute;transform:translate(-50%,-50%);
+    box-sizing:border-box;height:13.9%;
+    display:flex;flex-direction:column;justify-content:center;gap:.4vh;
+    padding:.7vh .6vw;background:var(--paper);
+    border:1px solid var(--grey-2);border-radius:6px
+  }
+  .flow-node .fn-name{font-family:var(--sans),var(--sans-zh);font-weight:500;font-size:max(14px,.94vw);line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+  .flow-node .fn-sub{font-family:var(--mono);font-size:max(11px,.6vw);line-height:1.3;letter-spacing:.02em;color:var(--text-helper)}
+  .flow-node.start,.flow-node.end{height:10.4%;border-radius:999px;align-items:center;text-align:center;padding:.4vh .5vw}
+  .flow-node.start .fn-name,.flow-node.end .fn-name{font-size:max(14px,.9vw)}
+  .flow-node.accent{background:var(--accent);border-color:var(--accent)}
+  .flow-node.accent .fn-name{color:var(--accent-on)}
+  .flow-node.accent .fn-sub{color:rgba(255,255,255,.72)}
+  .flow-node.alt{height:12.2%;border-style:dashed;background:transparent}
+  .flow-node.alt .fn-name{font-weight:400;color:var(--text-secondary)}
+  .flow-decision{
+    position:absolute;transform:translate(-50%,-50%);
+    width:10.4%;display:flex;flex-direction:column;align-items:center;gap:.3vh;
+    text-align:center;font-family:var(--sans),var(--sans-zh);
+    font-size:max(13px,.84vw);line-height:1.2;font-weight:500;color:var(--ink)
+  }
+  .flow-decision .fd-sub{font-family:var(--mono);font-size:max(10px,.55vw);font-weight:400;color:var(--text-helper);letter-spacing:.02em}
+  .flow-edge-label{
+    position:absolute;transform:translate(-50%,-100%);
+    margin-top:-5px;padding:1px 5px;background:var(--paper);
+    font-family:var(--mono);font-size:max(11px,.62vw);letter-spacing:.06em;
+    color:var(--text-secondary);line-height:1.4
+  }
+  .flow-edge-label.side{transform:translate(0,-50%);margin-top:0;margin-left:8px}
+  .flow-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;border-top:1px solid var(--border-subtle);padding-top:1.4vh;margin-top:1.4vh}
+  .flow-notes .fn-k{font-family:var(--mono);font-size:max(11px,.62vw);letter-spacing:.14em;text-transform:uppercase;color:var(--text-helper);margin-bottom:.5vh}
+  .flow-notes .fn-t{font-family:var(--sans),var(--sans-zh);font-size:max(14px,.86vw);line-height:1.5;color:var(--text-secondary)}
+
   /* 响应式降级 */
   /* 页面级覆盖：深色背景上的 IKB 提亮，保证可读性 */
   .slide.dark .duo-compare .col.accent .col-ttl{color:var(--accent-bright)}
@@ -1235,7 +1275,7 @@
     <canvas class="ascii-bg" aria-hidden="true"></canvas>
     <div class="chrome-min">
       <div class="l">视频联动 · 周会汇报</div>
-      <div class="r">SS · 2026.10.21 · 01 / 07</div>
+      <div class="r">SS · 2026.10.21 · 01 / 08</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
@@ -1247,7 +1287,7 @@
         <div data-anim="lead" class="lead" style="max-width:56ch;color:rgba(255,255,255,.86)">配置功能、变位自动弹视频、网关源码集成。三项工作的实现方式与接入约定。</div>
         <div style="display:flex;justify-content:space-between;align-items:end">
           <div class="t-meta" style="color:rgba(255,255,255,.6)">项目组内部周会 · 约 10 分钟</div>
-          <div class="t-meta" style="color:rgba(255,255,255,.6)">7 页</div>
+          <div class="t-meta" style="color:rgba(255,255,255,.6)">8 页</div>
         </div>
       </div>
     </div>
@@ -1259,7 +1299,7 @@
   <div class="canvas-card">
     <div class="chrome-min">
       <div class="l">视频联动配置 · Bindings</div>
-      <div class="r">02 / 07</div>
+      <div class="r">02 / 08</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto 1fr;gap:2vh">
@@ -1281,14 +1321,14 @@
           <div class="layer-nb">STEP 02</div>
           <div class="layer-icon"><i data-lucide="server"></i></div>
           <div class="layer-ttl">读取点表</div>
-          <div class="layer-desc">通过 linkage-gateway 的 REST API 获取点位元数据与当前绑定关系。</div>
+          <div class="layer-desc">通过 REST 并行读取 /points 与 /bindings，表格按点位聚合展示。</div>
           <div class="layer-tag">REST · 点表 · 绑定</div>
         </div>
         <div class="stack-block b-grey">
           <div class="layer-nb">STEP 03</div>
           <div class="layer-icon"><i data-lucide="monitor-play"></i></div>
           <div class="layer-ttl">选择通道</div>
-          <div class="layer-desc">从 WVP 设备目录选择设备，再选择其普通视频通道作为绑定目标。</div>
+          <div class="layer-desc">设备首次打开时全量加载，选中设备后再按需拉取其视频通道。</div>
           <div class="layer-tag">WVP · 设备 · 通道</div>
         </div>
       </div>
@@ -1303,7 +1343,7 @@
   <div class="canvas-card">
     <div class="chrome-min">
       <div class="l">绑定规则 · Rules</div>
-      <div class="r">03 / 07</div>
+      <div class="r">03 / 08</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto auto;gap:2vh">
@@ -1343,46 +1383,190 @@
   </div>
 </section>
 
-<!-- ============ 04 · 接入与筛选 ============ -->
-<section class="slide light" data-layout="S11" data-animate="timeline-walk" data-slide-id="event-popup">
+<!-- ============ 04 · 配置交互流程 ============ -->
+<section class="slide light" data-layout="S17" data-animate="manifesto" data-slide-id="binding-flow">
   <div class="canvas-card">
     <div class="chrome-min">
-      <div class="l">变位自动弹视频 · Popup</div>
-      <div class="r">04 / 07</div>
+      <div class="l">配置交互 · Flow</div>
+      <div class="r">04 / 08</div>
     </div>
 
-    <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:3vh">
-      <div data-anim="line" style="display:flex;flex-direction:column;gap:1.4vh">
-        <div class="t-cat">接入与筛选</div>
-        <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(5.2vw,9.2vh);line-height:.98;letter-spacing:-.03em">从网关消息到一次点播</h2>
-        <p class="lead" style="max-width:74ch;font-size:max(18px,1.08vw);line-height:1.5;opacity:.78">应用级 WebSocket 常驻；断线自动重连，组件销毁时清理连接与重连逻辑。</p>
+    <div style="flex:1;display:flex;flex-direction:column;padding:0 0 1vh">
+      <div data-anim="line" style="display:grid;grid-template-columns:7fr 5fr;gap:3vw;align-items:end">
+        <div style="display:flex;flex-direction:column;gap:1vh">
+          <div class="t-cat">从打开页面到保存绑定</div>
+          <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.2vw,7vh);line-height:1.04;letter-spacing:-.03em">配置交互：读取到保存</h2>
+        </div>
+        <p class="lead" style="font-size:max(16px,1vw);line-height:1.5;opacity:.78;margin-bottom:.4vh">表格负责查看，编辑弹窗负责选择；保存前统一校验，写入网关时按点位整组替换。</p>
       </div>
 
-      <div class="timeline-h" data-anim="up" style="min-height:46vh">
-        <span class="tl-h-axis" aria-hidden="true"></span>
-        <div class="tl-row" style="grid-template-columns:repeat(4,1fr)">
-          <div class="th-node up">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">01</span><span class="name">建立连接</span><span class="desc">全局 Bridge 接入网关 WS</span></span>
-          </div>
-          <div class="th-node down">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">02</span><span class="name">校验消息</span><span class="desc">只接受合法的 linkage_event</span></span>
-          </div>
-          <div class="th-node up">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">03</span><span class="name">判断匹配</span><span class="desc">matched 且 channels 非空</span></span>
-          </div>
-          <div class="th-node down accent">
-            <span class="dot"></span>
-            <span class="label"><span class="yr">04</span><span class="name">发起点播</span><span class="desc">用显式设备与通道 ID</span></span>
-          </div>
+      <div class="flow-canvas" data-anim="up">
+        <svg class="flow-links" viewBox="0 0 1400 460" role="img" aria-labelledby="flow-binding-title flow-binding-desc">
+          <title id="flow-binding-title">视频联动配置页的交互流程</title>
+          <desc id="flow-binding-desc">进入配置页后读取点表与绑定，选择点位并加载设备与通道，校验通过后整组替换该点位的绑定。</desc>
+          <defs>
+            <marker id="flow-binding-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 Z" fill="#737373"/>
+            </marker>
+          </defs>
+
+          <path class="diamond" d="M905 140 L985 190 L905 240 L825 190 Z"/>
+
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M135 190 H198"/>
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M360 190 H403"/>
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M565 190 H608"/>
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M770 190 H823"/>
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M985 190 H1033"/>
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M1205 190 H1243"/>
+          <path class="edge" marker-end="url(#flow-binding-arrow)" d="M905 240 V335"/>
+        </svg>
+
+        <div class="flow-node start" style="left:5.357%;top:41.304%;width:8.571%">
+          <span class="fn-name">进入配置页</span>
+        </div>
+        <div class="flow-node" style="left:20%;top:41.304%;width:11.429%">
+          <span class="fn-name">读取点表与绑定</span>
+          <span class="fn-sub">GET points · bindings</span>
+        </div>
+        <div class="flow-node" style="left:34.643%;top:41.304%;width:11.429%">
+          <span class="fn-name">选择点位，编辑绑定</span>
+          <span class="fn-sub">检索 · 分页</span>
+        </div>
+        <div class="flow-node" style="left:49.286%;top:41.304%;width:11.429%">
+          <span class="fn-name">选择通道并保存</span>
+          <span class="fn-sub">设备全量 · 通道按需</span>
+        </div>
+        <div class="flow-decision" style="left:64.643%;top:41.304%;width:11.4%">
+          <span>校验通过？</span>
+          <span class="fd-sub">完整 · 无重复</span>
+        </div>
+        <div class="flow-node accent" style="left:80%;top:41.304%;width:12.143%">
+          <span class="fn-name">全量替换绑定</span>
+          <span class="fn-sub">PUT /bindings/{key}</span>
+        </div>
+        <div class="flow-node end" style="left:94.286%;top:41.304%;width:10.714%">
+          <span class="fn-name">完成</span>
+        </div>
+        <div class="flow-node alt" style="left:64.643%;top:79.348%;width:15%">
+          <span class="fn-name">提示并停留</span>
+          <span class="fn-sub">修正后可再次保存</span>
+        </div>
+
+        <span class="flow-edge-label" style="left:72.143%;top:41.304%">是</span>
+        <span class="flow-edge-label side" style="left:64.643%;top:63.043%">否</span>
+      </div>
+
+      <div class="flow-notes" data-anim="up">
+        <div>
+          <div class="fn-k">读取</div>
+          <div class="fn-t">进入页面并行请求点表与绑定，表格按点位聚合展示。</div>
+        </div>
+        <div>
+          <div class="fn-k">编辑</div>
+          <div class="fn-t">设备列表首次打开时全量加载，通道在选中设备后按需拉取。</div>
+        </div>
+        <div>
+          <div class="fn-k">保存</div>
+          <div class="fn-t">校验完整性与重复后整点位替换，成功只更新该点位。</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="t-meta" style="display:flex;justify-content:space-between;gap:2vw;border-top:1px solid var(--border-subtle);padding-top:1.6vh">
-        <span>未绑定或未启用的点位不会触发点播</span>
-        <span>断线期间的事件不补播</span>
+<!-- ============ 05 · 弹窗交互流程 ============ -->
+<section class="slide light" data-layout="S17" data-animate="manifesto" data-slide-id="popup-flow">
+  <div class="canvas-card">
+    <div class="chrome-min">
+      <div class="l">弹窗交互 · Flow</div>
+      <div class="r">05 / 08</div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;padding:0 0 1vh">
+      <div data-anim="line" style="display:grid;grid-template-columns:7fr 5fr;gap:3vw;align-items:end">
+        <div style="display:flex;flex-direction:column;gap:1vh">
+          <div class="t-cat">从网关消息到播放器退出</div>
+          <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(4.2vw,7vh);line-height:1.04;letter-spacing:-.03em">弹窗交互：从消息到清理</h2>
+        </div>
+        <p class="lead" style="font-size:max(16px,1vw);line-height:1.5;opacity:.78;margin-bottom:.4vh">事件先校验再点播；失败、关闭和卸载都回到同一套清理逻辑。</p>
+      </div>
+
+      <div class="flow-canvas" data-anim="up">
+        <svg class="flow-links" viewBox="0 0 1400 460" role="img" aria-labelledby="flow-popup-title flow-popup-desc">
+          <title id="flow-popup-title">变位事件自动弹窗的交互流程</title>
+          <desc id="flow-popup-desc">收到网关消息后校验并判断是否匹配，匹配则弹窗点播首个通道，成功后播放，关闭或卸载时销毁播放器并停止点播。</desc>
+          <defs>
+            <marker id="flow-popup-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 Z" fill="#737373"/>
+            </marker>
+          </defs>
+
+          <path class="diamond" d="M470 140 L550 190 L470 240 L390 190 Z"/>
+          <path class="diamond" d="M890 140 L965 190 L890 240 L815 190 Z"/>
+
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M130 190 H178"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M340 190 H388"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M550 190 H583"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M775 190 H813"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M965 190 H1013"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M1155 190 H1203"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M470 240 V335"/>
+          <path class="edge" marker-end="url(#flow-popup-arrow)" d="M890 240 V335"/>
+        </svg>
+
+        <div class="flow-node start" style="left:4.643%;top:41.304%;width:9.286%">
+          <span class="fn-name">收到 WS 消息</span>
+        </div>
+        <div class="flow-node" style="left:18.571%;top:41.304%;width:11.429%">
+          <span class="fn-name">解析并校验</span>
+          <span class="fn-sub">type · schema · match</span>
+        </div>
+        <div class="flow-decision" style="left:33.571%;top:41.304%;width:11.4%">
+          <span>合法且匹配？</span>
+          <span class="fd-sub">通道非空</span>
+        </div>
+        <div class="flow-node accent" style="left:48.571%;top:41.304%;width:13.571%">
+          <span class="fn-name">弹窗并点播</span>
+          <span class="fn-sub">channels[0] · 显式 ID</span>
+        </div>
+        <div class="flow-decision" style="left:63.571%;top:41.304%;width:10.8%">
+          <span>点播成功？</span>
+          <span class="fd-sub">startPlay 返回</span>
+        </div>
+        <div class="flow-node" style="left:77.5%;top:41.304%;width:10%">
+          <span class="fn-name">Jessibuca 播放</span>
+          <span class="fn-sub">FLV 地址</span>
+        </div>
+        <div class="flow-node end" style="left:92.143%;top:41.304%;width:12.143%">
+          <span class="fn-name">关闭或卸载后清理</span>
+          <span class="fn-sub">销毁 · stopPlay</span>
+        </div>
+        <div class="flow-node alt" style="left:33.571%;top:79.348%;width:13.571%">
+          <span class="fn-name">丢弃，不弹窗</span>
+        </div>
+        <div class="flow-node alt" style="left:63.571%;top:79.348%;width:14.286%">
+          <span class="fn-name">显示错误并释放</span>
+        </div>
+
+        <span class="flow-edge-label" style="left:40.5%;top:41.304%">是</span>
+        <span class="flow-edge-label side" style="left:33.571%;top:63.043%">否</span>
+        <span class="flow-edge-label" style="left:70.714%;top:41.304%">是</span>
+        <span class="flow-edge-label side" style="left:63.571%;top:63.043%">否</span>
+      </div>
+
+      <div class="flow-notes" data-anim="up">
+        <div>
+          <div class="fn-k">连接</div>
+          <div class="fn-t">全局 Bridge 常驻，断线按 1s 至 30s 退避重连。</div>
+        </div>
+        <div>
+          <div class="fn-k">筛选</div>
+          <div class="fn-t">校验 type、schemaVersion、matchStatus 与 channels 非空。</div>
+        </div>
+        <div>
+          <div class="fn-k">替换与清理</div>
+          <div class="fn-t">新事件按 eventId 替换弹窗；关闭、失败、卸载统一清理。</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1393,7 +1577,7 @@
   <div class="canvas-card">
     <div class="chrome-min">
       <div class="l">播放与清理 · Lifecycle</div>
-      <div class="r">05 / 07</div>
+      <div class="r">06 / 08</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
@@ -1436,7 +1620,7 @@
   <div class="canvas-card">
     <div class="chrome-min">
       <div class="l">网关源码集成 · Source</div>
-      <div class="r">06 / 07</div>
+      <div class="r">07 / 08</div>
     </div>
 
     <div style="flex:1;padding:0 0 2vh;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
@@ -1476,7 +1660,7 @@
       <div class="half b-accent" style="padding:5.6vh 3.6vw 6.4vh;justify-content:space-between;position:relative;overflow:hidden">
         <canvas class="ascii-bg" aria-hidden="true"></canvas>
         <div class="chrome-min" style="margin-bottom:0;position:relative;z-index:1">
-          <div class="l">07 / 07</div>
+          <div class="l">08 / 08</div>
           <div class="r">CONVENTION</div>
         </div>
 
@@ -1557,7 +1741,7 @@ const SPEAKER_NOTES = [
     cue: '确认观众屏已同步后开始'
   },
   {
-    id: 'binding-entry', title: '新增配置入口', section: '配置功能', minutes: 1.3,
+    id: 'binding-entry', title: '新增配置入口', section: '配置功能', minutes: 1.1,
     purpose: '说明配置页的位置、数据来源和操作对象',
     talk: [
       '菜单新增“视频联动配置”，路由是 /linkage-bindings，独立于 SSV 事件页面',
@@ -1569,7 +1753,7 @@ const SPEAKER_NOTES = [
     cue: '可指出底部两个文件路径，说明改动范围'
   },
   {
-    id: 'binding-rules', title: '绑定由用户显式选择', section: '配置功能', minutes: 1.4,
+    id: 'binding-rules', title: '绑定由用户显式选择', section: '配置功能', minutes: 1.1,
     purpose: '强调绑定规则：不猜、可多绑、以网关为准',
     talk: [
       '不做隐式匹配：不按设备出现顺序、名称相似度或历史记录挑通道',
@@ -1581,20 +1765,32 @@ const SPEAKER_NOTES = [
     delivery: '“不猜”这一点说清楚，它是后面自动弹窗可信的前提'
   },
   {
-    id: 'event-popup', title: '从网关消息到一次点播', section: '自动弹视频', minutes: 1.4,
-    purpose: '说明全局接入、消息筛选和点播参数来源',
+    id: 'binding-flow', title: '配置交互：读取到保存', section: '配置功能', minutes: 1.4,
+    purpose: '用流程说明配置页从读取到保存的交互',
     talk: [
-      '应用级 Bridge 常驻接入网关 WebSocket，断线自动重连',
-      '只处理合法的 linkage_event，并且要求已匹配、通道列表非空',
-      '点播直接使用消息里的 deviceId 和 channelId，不在前端二次查找',
-      '组件销毁时停止重连并移除监听；断线期间的事件不补播',
-      '相关文件是 LinkageGatewayBridge.vue'
+      '进入页面后并行读取点表与绑定，表格按点位聚合，避免逐条查绑定',
+      '编辑时先选设备再选通道；设备首次打开时全量加载，通道按设备懒加载',
+      '保存前检查设备与通道是否成对、同一通道是否重复',
+      '通过后按点位整组替换绑定，成功只更新当前点位，失败留在弹窗修正'
     ],
-    transition: '点播发起后，播放器本身还有一套生命周期',
-    advance: '讲完第 04 步后翻页'
+    transition: '绑定保存后，看事件到达时弹窗怎么走',
+    delivery: '沿流程图从左到右讲，不要逐节点念标签'
   },
   {
-    id: 'player-lifecycle', title: '只播一路，清理要完整', section: '自动弹视频', minutes: 1.2,
+    id: 'popup-flow', title: '弹窗交互：从消息到清理', section: '自动弹视频', minutes: 1.4,
+    purpose: '用流程说明事件校验、点播与退出清理',
+    talk: [
+      '全局 Bridge 常驻连接，断线按 1s 到 30s 退避重连，组件销毁时停止',
+      '消息先过运行时校验：type、schemaVersion、matchStatus、channels 非空',
+      '合法且匹配才弹窗，用 channels[0] 的 deviceId 与 channelId 调 startPlay',
+      '点播成功交给 Jessibuca；失败显示错误并释放，不留下悬挂请求',
+      '关闭、播放出错或页面卸载都走同一套清理：销毁播放器并 stopPlay'
+    ],
+    transition: '流程里的退出路径，下一页展开讲',
+    advance: '讲完两条失败分支后翻页'
+  },
+  {
+    id: 'player-lifecycle', title: '只播一路，清理要完整', section: '自动弹视频', minutes: 1.1,
     purpose: '说明当前播放范围和所有退出路径',
     talk: [
       '默认播放 channels[0]；其他绑定只显示数量，暂不做多画面拼屏',
@@ -1607,7 +1803,7 @@ const SPEAKER_NOTES = [
     cue: '这一页四条都是退出路径，不要只讲关闭弹窗'
   },
   {
-    id: 'source-submodule', title: '网关以子模块引入', section: '源码集成', minutes: 1.2,
+    id: 'source-submodule', title: '网关以子模块引入', section: '源码集成', minutes: 1.1,
     purpose: '说明源码位置、启动方式和与前端构建的边界',
     talk: [
       '网关在 external/linkage-gateway 以 Git submodule 引入，锁定具体提交',
@@ -1620,7 +1816,7 @@ const SPEAKER_NOTES = [
     cue: '强调“锁定提交”，不是跟随远端分支'
   },
   {
-    id: 'backend-convention', title: '后端能力的接入约定', section: '接入约定', minutes: 1.4,
+    id: 'backend-convention', title: '后端能力的接入约定', section: '接入约定', minutes: 1.2,
     purpose: '把这次集成上升为可复用的接入规范',
     talk: [
       '网关集成真正确定的是：Web UI 后续新增子功能时，后端能力怎么接',
